@@ -50,7 +50,7 @@ export const handleSignUp = async (email:string,password:string):Promise<{succes
 
 export const handleLogin = async (email:string,password:string):Promise<{success:boolean,token?:string,errors?:{field:PropertyKey,message:string}[]}> => {
 
-    const query = "SELECT * FROM users WHERE email = ? and password = ?";
+    const query = "SELECT * FROM users WHERE email = ? and password = ? and provider != 'google'";
     const result = await callDatabase(query,[email,password]);
 
     try{
