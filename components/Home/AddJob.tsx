@@ -3,8 +3,9 @@ import React, { useTransition,useState } from "react";
 import { AddApplication } from "@/server/applications/main";
 import { ApplicationSchema } from "@/schema/applications";
 import Message from "../errors/Message";
+import { X } from "lucide-react";
 
-const AddJob = () => {
+const AddJob = ({setShowAddJob}:{setShowAddJob:React.Dispatch<React.SetStateAction<boolean>>}) => {
     const [isPending,startTransition] = useTransition();
     const [points,setPoints] = useState(1);
     const [errors,setErrors] = useState<{field:PropertyKey,message:string}[]>([]);
@@ -36,7 +37,9 @@ const AddJob = () => {
 
         startTransition(async ()=>{
             const result = await AddApplication(data);
-            console.log(result);
+            if(result?.success){
+                setShowAddJob(false);
+            }
         })
     }
 
@@ -48,7 +51,8 @@ const AddJob = () => {
 
   return (
     <div className="fixed bg-black/30 border w-full h-full left-0 top-0 flex items-center justify-center">
-        <form onSubmit={handleSubmit} className="bg-white w-[95%] h-full max-w-[700px] max-h-[550px] rounded-lg flex flex-col items-center gap-5 overflow-y-scroll p-5">
+        <form onSubmit={handleSubmit} className="bg-white relative w-[95%] h-full max-w-[700px] max-h-[550px] rounded-lg flex flex-col items-center gap-5 overflow-y-scroll p-5">
+            <button type="button" className="absolute top-2 right-2 cursor-pointer text-red-500" onClick={() => setShowAddJob(false)}><X /></button>
             <h1 className="text-4xl text-center">Add Job</h1>
 
             <div className="grid grid-cols-2 max-sm:grid-cols-1 gap-5 w-full">

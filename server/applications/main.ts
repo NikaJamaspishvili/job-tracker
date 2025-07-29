@@ -2,6 +2,7 @@
 import { Application,ApplicationSchema } from "@/schema/applications";
 import { callDatabase } from "@/config/db";
 import { verifyJwt } from "../jwt/verify";
+import { success } from "zod";
 
 export const AddApplication = async (data: Application) => {
     
@@ -11,7 +12,7 @@ export const AddApplication = async (data: Application) => {
         console.log(errors);
         return;
     }
-    
+
     //first of all, identify the current date
     const today = new Date();
     const formatted = today.toISOString().split('T')[0];
@@ -21,7 +22,7 @@ export const AddApplication = async (data: Application) => {
     const query = "INSERT INTO applications (job_title,company,platform,job_link,points,level,date,description,created_at,userId) VALUES (?,?,?,?,?,?,?,?,?,?)";
     try{
         const result = await callDatabase(query,[...Object.values(data),formatted,userId]);
-        console.log(result);
+        return {success:true}
     }catch(err){
         throw new Error("Error has appeared when adding application");
     }
