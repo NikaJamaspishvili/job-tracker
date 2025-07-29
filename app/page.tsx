@@ -1,7 +1,9 @@
+import AddJob from "@/components/Home/AddJob";
+
 export default function Home() {
   return (
     <div className="border">
-      <h1>hello world</h1>
+      <AddJob />
     </div>
   );
 }

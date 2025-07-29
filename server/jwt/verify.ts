@@ -10,7 +10,7 @@ export async function verifyJwt() {
   try {
     const { payload } = await jwtVerify(token, secret);
  //   console.log("payload is: ",payload);
-    return payload;
+    return payload.id;
   } catch (e) {
     return null; // invalid token
   }

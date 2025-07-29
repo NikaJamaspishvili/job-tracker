@@ -1,4 +1,4 @@
-import Navbar from "@/components/navbar/Navbar";
+import Navbar from "@/components/Navbar";
 import "./globals.css";
 
 export default function RootLayout({
@@ -8,8 +8,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="bg-white-500">
-        <div className="w-[95%] max-w-[1000px] min-h-screen flex mx-auto flex-col">
+      <body className="bg-white">
+        <div className="w-[95%] max-w-[1200px] min-h-screen flex mx-auto flex-col">
         <Navbar />
         {children}
         </div>
