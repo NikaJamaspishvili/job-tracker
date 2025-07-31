@@ -50,7 +50,7 @@ const AddJob = ({setShowAddJob}:{setShowAddJob:React.Dispatch<React.SetStateActi
     }
 
   return (
-    <div className="fixed bg-black/30 border w-full h-full left-0 top-0 flex items-center justify-center">
+    <div className="fixed bg-black/30 border w-full h-full left-0 top-0 flex items-center justify-center z-10">
         <form onSubmit={handleSubmit} className="bg-white relative w-[95%] h-full max-w-[700px] max-h-[550px] rounded-lg flex flex-col items-center gap-5 overflow-y-scroll p-5">
             <button type="button" className="absolute top-2 right-2 cursor-pointer text-red-500" onClick={() => setShowAddJob(false)}><X /></button>
             <h1 className="text-4xl text-center">Add Job</h1>

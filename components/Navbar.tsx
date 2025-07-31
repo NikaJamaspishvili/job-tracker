@@ -8,9 +8,10 @@ const Navbar = ({setShowAddJob}:{setShowAddJob:React.Dispatch<React.SetStateActi
       <Image src={notfound} alt="logo" className="w-20" />
 
       <section className="flex gap-5 [&>a]:cursor-pointer">
+        <a href="/">Home</a>
         <a>Events</a>
         <a onClick={()=>setShowAddJob(true)}>Add Job</a>
-        <a>Profile</a>
+        <a href="/profile">Profile</a>
       </section>
       </div>
     </div>
