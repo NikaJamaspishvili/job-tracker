@@ -5,6 +5,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  console.log("register layout");
   return (
     <html lang="en">
       <body className="bg-blue-500">

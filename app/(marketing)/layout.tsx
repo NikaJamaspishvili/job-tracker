@@ -1,7 +1,7 @@
 "use client";
 
 import Navbar from "@/components/Navbar";
-import "./globals.css";
+import "../globals.css";
 import { useState } from "react";
 import AddJob from "@/components/Home/AddJob";
 
@@ -10,7 +10,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
+  console.log("app layout");
   const [showAddJob,setShowAddJob] = useState(false);
   return (
     <html lang="en">

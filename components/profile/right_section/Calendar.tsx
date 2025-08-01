@@ -23,7 +23,7 @@ const Calendar = () => {
         }
         setArray(newArray);
       }
-      
+
     }
     fetch();
   },[range]);
