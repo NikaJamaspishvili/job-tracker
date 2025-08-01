@@ -3,11 +3,13 @@ import { useEffect,useState } from "react"
 import { getGoalsInfo } from "@/server/goals/main";
 
 const Calendar = () => {
-  const [array,setArray] = useState([]);
+  const [array,setArray] = useState<any>([]);
   useEffect(()=>{
     async function fetch(){
       const result = await getGoalsInfo(30);
-      console.log(result);
+      if(result.success){
+        setArray(result.result);
+      }
     }
     fetch();
   },[]);
@@ -17,7 +19,7 @@ const Calendar = () => {
     {id:2,goal:5,sent:2,day:29,date:"2025-10-11"},
     {id:3,goal:5,sent:4,day:28,date:"2025-10-10"},
   ]
-
+  if(array && array.length === 0) return <div>Loading...</div>
   return (
     <div className="flex flex-col">
         <select className="p-2 outline-0 bg-gray-500 text-white rounded-lg mx-auto">
@@ -28,10 +30,10 @@ const Calendar = () => {
         </select>
 
         <section className="flex flex-col gap-10 pt-10">
-          {data.map(result => (
-            <div key={result.id} className="text-center flex flex-col gap-5">
-              <h1 className="text-xl font-bold flex gap-2 justify-center">Day <span className="text-blue-500">{result.day}</span></h1>
-              <Goal date={result.date} goal={result.goal} sent={result.sent}/>
+          {array.map((result:any,index:number) => (
+            <div key={index} className="text-center flex flex-col gap-5">
+              <h1 className="text-xl font-bold flex gap-2 justify-center">Day <span className="text-blue-500">{30 - result.days}</span></h1>
+              <Goal date={(result.created_at).toLocaleDateString('en-CA')} goal={result.current_goal} sent={result.row_count}/>
             </div>
           ))}
         </section>

@@ -2,21 +2,24 @@
 
 import Goal from "./Goal"
 import AddGoal from "./AddGoal"
+import { updateGoal } from "@/server/goals/main";
 
 import { useState } from "react";
+import { NutIcon } from "lucide-react";
 
 const Daily_Goal = ({daily_goal,sent,setResult}:{daily_goal:number | undefined,sent:number,setResult:React.Dispatch<React.SetStateAction<any>>}) => {
   const state = daily_goal && daily_goal > 0 ? "goal" : "addgoal";
   const [show,setShow] = useState(state);
   console.log(daily_goal,show);
 
-  const handleClearClick = () => {
+  const handleClearClick = async () => {
     setResult((prev:any) => {
       const updated = [...prev];
       updated[0] = { ...updated[0], daily_goal: 0 };
       return updated;
     });
     setShow("addgoal");
+    await updateGoal(null);
   }
 
   return (

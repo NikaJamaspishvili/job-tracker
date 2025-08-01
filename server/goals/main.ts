@@ -2,7 +2,7 @@
 import { verifyJwt } from "../jwt/verify";
 import { callDatabase } from "@/config/db";
 
-export const updateGoal = async (goal: number) => {
+export const updateGoal = async (goal: number | null) => {
     const userId = await verifyJwt();
     console.log("goal is: ",goal);
     const query = "UPDATE users SET daily_goal=? where id=?";
@@ -20,7 +20,7 @@ export const getUserInfo = async () => {
     const userId = await verifyJwt();
     const today = new Date();
     const formatted = today.toISOString().split('T')[0];
-    const query = "SELECT users.daily_goal, users.email, COUNT(applications.id) AS sent FROM users LEFT JOIN applications ON users.id = applications.userId AND applications.date = ? WHERE users.id = ? GROUP BY users.id;";
+    const query = "SELECT users.daily_goal, users.email, COUNT(applications.id) AS sent FROM users LEFT JOIN applications ON users.id = applications.userId AND applications.created_at = ? WHERE users.id = ? GROUP BY users.id;";
 
     try{
         const result = await callDatabase(query,[formatted,userId]);
@@ -33,15 +33,15 @@ export const getUserInfo = async () => {
 
 export const getGoalsInfo = async (range:number) => {
     const userId = await verifyJwt();
-    const query = `SELECT created_at, current_goal, row_count
+    const query = `SELECT created_at, current_goal, row_count,DATEDIFF('2025-08-01', created_at) AS days
                     FROM (
                     SELECT *,
                             ROW_NUMBER() OVER (PARTITION BY created_at ORDER BY id DESC) AS rn,
                             COUNT(*) OVER (PARTITION BY created_at) AS row_count
                     FROM applications
-                    WHERE created_at >= '2025-07-1' and userId=9
+                    WHERE created_at >=? and userId=?
                     ) AS ranked
-                   WHERE rn = 1;`
+                   WHERE rn = 1 order by created_at desc;`
     
     //calculate the date
     const today = new Date();
