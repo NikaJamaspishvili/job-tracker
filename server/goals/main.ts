@@ -4,15 +4,26 @@ import { callDatabase } from "@/config/db";
 
 export const updateGoal = async (goal: number | null) => {
     const userId = await verifyJwt();
-    console.log("goal is: ",goal);
+    //today date
+    const today = new Date();
+    const formatted = today.toISOString().split('T')[0];
+
     const query = "UPDATE users SET daily_goal=? where id=?";
+    const query2 = "update applications set current_goal = ? where id =(select max(id) from (select * from applications where created_at=? order by id desc) as tabla);";
 
     try{
         await callDatabase(query,[goal,userId]);
+    }catch(err){
+        console.log(err);
+        throw new Error("Error has appeared when updating daily_goal in users table");
+    }
+
+    try{
+        await callDatabase(query2,[goal,formatted]);
         return {success:true};
     }catch(err){
         console.log(err);
-        throw new Error("Error has appeared when updating goal");
+        throw new Error("Error has appeared when updating goals");
     }
 };
 
@@ -33,7 +44,7 @@ export const getUserInfo = async () => {
 
 export const getGoalsInfo = async (range:number) => {
     const userId = await verifyJwt();
-    const query = `SELECT created_at, current_goal, row_count,DATEDIFF('2025-08-01', created_at) AS days
+    const query = `SELECT created_at, current_goal, row_count,(${range} - DATEDIFF(?, created_at)) AS days
                     FROM (
                     SELECT *,
                             ROW_NUMBER() OVER (PARTITION BY created_at ORDER BY id DESC) AS rn,
@@ -51,7 +62,7 @@ export const getGoalsInfo = async (range:number) => {
 
     console.log(formatted);
     try{
-        const result = await callDatabase(query,[formatted,userId]);
+        const result = await callDatabase(query,[today,formatted,userId]);
         return {success:true,result:result};
     }catch(err){
         console.log(err);

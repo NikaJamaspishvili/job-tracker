@@ -3,7 +3,13 @@ const Goal = ({date,goal,sent,radius_,stroke_}:{date:string,goal:number,sent:num
     const stroke = stroke_ || 8;
     const normalizedRadius = radius - stroke / 2;
     const circumference = 2 * Math.PI * normalizedRadius;
-    const progress = Math.min(Math.max(sent, 0), Number(goal)) / Number(goal);
+
+    let progress;
+    if(goal !== null){
+      progress = Math.min(Math.max(sent, 0), Number(goal)) / Number(goal);
+    }else{
+      progress = 0;
+    }
   
     const strokeDashoffset = circumference * (1 - progress);
 
@@ -35,8 +41,8 @@ const Goal = ({date,goal,sent,radius_,stroke_}:{date:string,goal:number,sent:num
     </svg>
     <label className="text-2xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">{sent}</label>
     </div>
-    <h1 className="text-lg"><span className="font-bold">{sent}/{goal}</span> Applications sent <span className="font-bold text-blue-900">{date}</span></h1>
-    {sent >= goal && <h1>Your goal has been achieved ✅</h1>}
+    <h1 className="text-lg"><span className="font-bold">{goal !== null ? sent+" / "+goal : sent}</span> Applications sent <span className="font-bold text-blue-900">{date}</span></h1>
+    {goal!== null && sent >= goal && <h1>Your goal has been achieved ✅</h1>}
     </section>
   )
 }
