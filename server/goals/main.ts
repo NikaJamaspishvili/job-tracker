@@ -30,3 +30,31 @@ export const getUserInfo = async () => {
         throw new Error("Error has appeared when getting user info in profile");
     }
 }
+
+export const getGoalsInfo = async (range:number) => {
+    const userId = await verifyJwt();
+    const query = `SELECT created_at, current_goal, row_count
+                    FROM (
+                    SELECT *,
+                            ROW_NUMBER() OVER (PARTITION BY created_at ORDER BY id DESC) AS rn,
+                            COUNT(*) OVER (PARTITION BY created_at) AS row_count
+                    FROM applications
+                    WHERE created_at >= '2025-07-1' and userId=9
+                    ) AS ranked
+                   WHERE rn = 1;`
+    
+    //calculate the date
+    const today = new Date();
+    const pastDate = new Date(today);
+    pastDate.setDate(pastDate.getDate() - range);
+    const formatted = pastDate.toISOString().split('T')[0];
+
+    console.log(formatted);
+    try{
+        const result = await callDatabase(query,[formatted,userId]);
+        return {success:true,result:result};
+    }catch(err){
+        console.log(err);
+        throw new Error("Error has appeared when getting goals calendar info");
+    }
+}
