@@ -26,3 +26,17 @@ export const AddApplication = async (data: Application) => {
         throw new Error("Error has appeared when adding application");
     }
 }
+
+
+export const getApplications = async (query:string) => {
+    const userId = await verifyJwt();
+    try{
+        const result = await callDatabase(query,[userId]);
+        if(Array.isArray(result)) return {success:true,data:result};
+        return {success:false,data:[]}
+    }catch(err){
+        console.log(err);
+        throw new Error("Error has appeared when getting applications");
+    }
+
+}
