@@ -13,7 +13,6 @@ const Job_Details = ({popup,setPopup,setApps}:Props) => {
     const [object,setObject] = useState<any>(null);
     const [isEditable,setIsEditable] = useState(false);
     const [isPending,startTransition] = useTransition();
-    const [isPending2,startTransition2] = useTransition();
     const [error,setError] = useState('');
     const [value,setValue] = useState(0);
 

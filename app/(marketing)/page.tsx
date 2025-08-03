@@ -66,7 +66,6 @@ export default function Home() {
   return (
     <div className="pt-25">
       {showAddJob && <AddJob setShowAddJob={setShowAddJob} setApps={setApps}/>}
-      {popup && <Job_Details popup={popup} setPopup={setPopup} setApps={setApps}/>}
       <Filter values={values} setValues={setValues} fetchData={fetchData}/>
       <Jobs setPopup={setPopup} apps={apps} setApps={setApps} showButton={showButton} fetchMoreData={fetchMoreData} isPending={isPending}/>
     </div>

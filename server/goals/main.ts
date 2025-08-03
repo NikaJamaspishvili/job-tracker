@@ -69,3 +69,17 @@ export const getGoalsInfo = async (range:number) => {
         throw new Error("Error has appeared when getting goals calendar info");
     }
 }
+
+export const getApplication = async (date:string) => {
+    const userId = await verifyJwt();
+    console.log("date is: ",date);
+    const query = "select id,job_title,company,platform,job_link,points,level,DATE_FORMAT(date, '%Y-%m-%d') as date,description from applications where userId=? and created_at=? order by id desc";
+    try{
+        const result = await callDatabase(query,[userId,date]);
+        if(Array.isArray(result)) return {success:true,result:result};
+        return {success:false,result:[]};
+    }catch(err){
+        console.log(err);
+        throw new Error("Error has appeared when getting applications");
+    }
+}

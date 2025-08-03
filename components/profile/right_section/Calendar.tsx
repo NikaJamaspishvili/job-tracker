@@ -3,10 +3,12 @@ import { useEffect,useState } from "react"
 import { getGoalsInfo } from "@/server/goals/main";
 import { Frown } from "lucide-react";
 import Loading from "@/components/Loading";
+import Popup from "./Popup";
 
 const Calendar = () => {
   const [array,setArray] = useState<any>([]);
   const [range,setRange] = useState<number>(7);
+  const [popup,setPopup] = useState("");
   useEffect(()=>{
     async function fetch(){
       const result = await getGoalsInfo(range);
@@ -32,6 +34,7 @@ const Calendar = () => {
   if(array && array.length === 0) return <Loading />
   return (
     <div className="flex flex-col">
+      {popup.length > 0 && <Popup date={popup} setPopup={setPopup}/>}
         <select onChange={(e)=>setRange(Number(e.target.value))} className="p-2 outline-0 bg-gray-500 text-white rounded-lg mx-auto">
           <option value="7">Last 7 day</option>
           <option value="30">Last 30 day</option>
@@ -50,8 +53,10 @@ const Calendar = () => {
                 </section>
               </div>
               )
-            return <div key={index} className="text-center flex flex-col gap-5">
-              <h1 className="text-xl font-bold flex gap-2 justify-center">Day <span className="text-blue-500">{array[index].days}</span></h1>
+
+            console.log(array[index]);
+            return <div onClick={()=>setPopup(array[index].created_at.toLocaleDateString('en-CA'))} key={index} className="text-center hover:scale-101 transition-all duration-100 flex flex-col gap-5 border w-4/5 mx-auto p-5 rounded-xl bg-blue-400 cursor-pointer">
+              <h1 className="text-xl font-bold flex gap-2 justify-center">Day <span className="text-black">{array[index].days}</span></h1>
               <Goal date={(array[index].created_at).toLocaleDateString('en-CA')} goal={array[index].current_goal} sent={array[index].row_count}/>
             </div>
           })}
