@@ -5,7 +5,7 @@ import { Frown } from "lucide-react";
 
 const Calendar = () => {
   const [array,setArray] = useState<any>([]);
-  const [range,setRange] = useState<number>(30);
+  const [range,setRange] = useState<number>(7);
   useEffect(()=>{
     async function fetch(){
       const result = await getGoalsInfo(range);
@@ -32,9 +32,9 @@ const Calendar = () => {
   return (
     <div className="flex flex-col">
         <select onChange={(e)=>setRange(Number(e.target.value))} className="p-2 outline-0 bg-gray-500 text-white rounded-lg mx-auto">
+          <option value="7">Last 7 day</option>
           <option value="30">Last 30 day</option>
           <option value="14">Last 14 day</option>
-          <option value="7">Last 7 day</option>
           <option value="3">Last 3 day</option>
         </select>
 

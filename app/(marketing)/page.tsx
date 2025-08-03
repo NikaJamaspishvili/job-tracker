@@ -2,6 +2,8 @@
 
 import Filter from "@/components/Home/Filter";
 import Jobs from "@/components/Home/Jobs";
+import Loading from "@/components/Loading";
+import Job_Details from "@/components/Home/Job_Details";
 import { useEffect, useState,useTransition } from "react";
 
 import { getApplications } from "@/server/applications/main";
@@ -11,14 +13,16 @@ export default function Home() {
   const [apps,setApps] = useState<any>([]);
   const [query,setQuery] = useState<string>('');
   const [showButton,setShowButton] = useState(true);
+  const [popup,setPopup] = useState<boolean | number>(false);
   
   const [isPending,startTransition] = useTransition();
+  const [isPending2,startTransition2] = useTransition();
 
   async function fetchData(){
     //this function is used for fetching the data on initial load and after filtering.
     const newArray = values.filter(item => item.value.length > 0);
 
-    let query = "select id,job_title,company,platform,points,level,date from applications where userId=?";
+    let query = "select id,job_title,company,platform,points,level,DATE_FORMAT(date, '%Y-%m-%d') as date from applications where userId=?";
     if(newArray.length !== 0){
         newArray.forEach((item:any,index:number) => {
                 query += ` and ${item.title} in ('${item.value.join(",")}')`;
@@ -27,12 +31,13 @@ export default function Home() {
     setQuery(query);
     query+=" order by id desc limit 5";
     console.log(query);
-
-    const data = await getApplications(query);
+    startTransition2(async ()=>{
+      const data = await getApplications(query);
     
-    if(data.success){
-      return setApps(data.data as any);
-    }
+      if(data.success){
+        return setApps(data.data as any);
+      }
+    })
   }
 
   async function fetchMoreData(){
@@ -53,11 +58,12 @@ export default function Home() {
   useEffect(()=>{
     fetchData();
   },[])
-  
+  if(isPending2) return <Loading />
   return (
     <div className="pt-25">
+      {popup && <Job_Details popup={popup} setPopup={setPopup} setApps={setApps}/>}
       <Filter values={values} setValues={setValues} fetchData={fetchData}/>
-      <Jobs apps={apps} setApps={setApps} showButton={showButton} fetchMoreData={fetchMoreData} isPending={isPending}/>
+      <Jobs setPopup={setPopup} apps={apps} setApps={setApps} showButton={showButton} fetchMoreData={fetchMoreData} isPending={isPending}/>
     </div>
   );
 }

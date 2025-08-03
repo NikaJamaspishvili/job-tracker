@@ -40,3 +40,45 @@ export const getApplications = async (query:string) => {
     }
 
 }
+
+export const getSingleApplication = async (id:number) => {
+    try{
+        const query = "select id,job_title,company,platform,job_link,points,level,DATE_FORMAT(date, '%Y-%m-%d') as date,description from applications where id=?";
+        const result = await callDatabase(query,[id]);
+        console.log(result);
+        if(Array.isArray(result)) return {success:true,data:result};
+        return {success:false,data:[]}
+    }catch(err){
+        console.log(err);
+        throw new Error("Error has appeared when getting single application");
+    }
+}
+
+export const updateApplication = async (id:number,data:Application) => {
+    try{
+        const keys = Object.keys(data);
+        const values = Object.values(data);
+        
+        console.log(data,keys,values);
+        const query = `update applications set ${keys.map(key => `${key} = ?`)} where id=?`;
+        const result = await callDatabase(query,[...values,id]);
+        console.log(result);
+        return {success:true};
+    }catch(err){
+        console.log(err);
+        throw new Error("Error has appeared when updating application");
+    }
+}
+
+
+export const deleteApplication = async (id:number) => {
+    try{
+        const query = "delete from applications where id=?";
+        const result = await callDatabase(query,[id]);
+        console.log(result);
+        return {success:true};
+    }catch(err){
+        console.log(err);
+        throw new Error("Error has appeared when deleting application");
+    }
+}

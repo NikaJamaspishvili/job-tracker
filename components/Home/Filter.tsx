@@ -2,7 +2,6 @@
 
 import { ChevronDown,ChevronUp } from "lucide-react";
 import React, { useState } from "react";
-import Message from "../errors/Message";
 
 interface Props{
     values:{title:string,value:string[]}[],
@@ -53,11 +52,14 @@ const Filter = ({values,setValues,fetchData}:Props) => {
     }
 
     const handleClearButton = () => {
+        const val = values.find(item => item.value.length > 0);
+        if(!val) return;
         const newArray = [...values];
         newArray.forEach(item => item.value = []);
         setValues(newArray);
         if(error.length > 0) setError('');
         if(isOpen.length > 0) setIsOpen('');
+        fetchData();
     }
 
     const handleFilter = async () => {

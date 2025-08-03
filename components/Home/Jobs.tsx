@@ -1,14 +1,13 @@
-import { getApplications } from "@/server/applications/main";
-
 interface Props{
   apps:any,
   setApps:React.Dispatch<React.SetStateAction<any[]>>,
   fetchMoreData:()=>void,
   showButton:boolean,
   isPending:boolean,
+  setPopup:React.Dispatch<React.SetStateAction<boolean | number>>,
 }
 
-const Jobs = ({apps,setApps,showButton,fetchMoreData,isPending}:Props) => {
+const Jobs = ({apps,setApps,showButton,fetchMoreData,isPending,setPopup}:Props) => {
   const data = [
     {id:1,title:"title",company:"company",date:"date",level:"level",points:"points",platform:"platform"},
     {id:2,title:"title2",company:"company2",date:"date2",level:"level2",points:"points2",platform:"platform2"},
@@ -33,17 +32,17 @@ const Jobs = ({apps,setApps,showButton,fetchMoreData,isPending}:Props) => {
       <section className="flex flex-col">
         <div className="flex flex-col gap-10 mt-10">
           {apps.map((result:any,index:number) => (
-            <div key={index} className="flex gap-5 border rounded-xl p-3 justify-around bg-gray-300 hover:scale-101 transition-all duration-100 cursor-pointer">
+            <div onClick={()=>setPopup(result.id)} key={index} className="flex gap-5 border rounded-xl p-3 justify-around bg-gray-300 hover:scale-101 transition-all duration-100 cursor-pointer">
               {data2.map(item => (
                 <div key={item.id} className="flex flex-col gap-3">
                   <h1>{item.label}</h1>
-                  <p className="text-gray-500">{item.label === "date" ? result[item.label].toLocaleDateString('en-CA') : result[item.label]}</p>
+                  <p className="text-gray-500">{result[item.label]}</p>
                 </div>
               ))}
             </div>
           ))}
         </div>
-        {showButton ? <button disabled={isPending} onClick={fetchMoreData} className="bg-gray-400 w-4/5 max-w-[200px] rounded-xl text-white mt-3 p-2 cursor-pointer mx-auto">{isPending ? "Loading..." : "Load More"}</button> : <p className="text-center text-red-500 text-2xl mt-5">You have reached the end</p>}
+        {showButton ? (apps.length > 0 && <button disabled={isPending} onClick={fetchMoreData} className="bg-gray-400 w-4/5 max-w-[200px] rounded-xl text-white mt-3 p-2 cursor-pointer mx-auto">{isPending ? "Loading..." : "Load More"}</button>) : <p className="text-center text-red-500 text-2xl mt-5">You have reached the end</p>}
       </section>
     </div>
   )

@@ -13,3 +13,7 @@ export const ApplicationSchema = z.object({
     level:z.string().trim().min(1,"Level is required"),
     date:z.string().trim().min(1,"Date is required"),
 })
+
+export const SingleAppSchema = z.object({
+    
+})
