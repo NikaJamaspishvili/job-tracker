@@ -16,8 +16,8 @@ export default function RootLayout({
     <html lang="en">
       <body className="bg-white">
         <div className="w-[95%] max-w-[1200px] min-h-screen flex mx-auto flex-col">
-        <Navbar setShowAddJob={setShowAddJob}/>
         {showAddJob && <AddJob setShowAddJob={setShowAddJob}/>}
+        <Navbar setShowAddJob={setShowAddJob}/>
         {children}
         </div>
       </body>

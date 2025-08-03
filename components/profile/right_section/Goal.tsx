@@ -1,4 +1,4 @@
-const Goal = ({date,goal,sent,radius_,stroke_}:{date:string,goal:number,sent:number,radius_?:number,stroke_?:number}) => {
+const Goal = ({date,goal,sent,radius_,stroke_}:{date:string,goal:number | null,sent:number,radius_?:number,stroke_?:number}) => {
     const radius = radius_ || 60;
     const stroke = stroke_ || 8;
     const normalizedRadius = radius - stroke / 2;

@@ -2,6 +2,7 @@ import Goal from "./Goal"
 import { useEffect,useState } from "react"
 import { getGoalsInfo } from "@/server/goals/main";
 import { Frown } from "lucide-react";
+import Loading from "@/components/Loading";
 
 const Calendar = () => {
   const [array,setArray] = useState<any>([]);
@@ -28,7 +29,7 @@ const Calendar = () => {
     fetch();
   },[range]);
 
-  if(array && array.length === 0) return <div>Loading...</div>
+  if(array && array.length === 0) return <Loading />
   return (
     <div className="flex flex-col">
         <select onChange={(e)=>setRange(Number(e.target.value))} className="p-2 outline-0 bg-gray-500 text-white rounded-lg mx-auto">

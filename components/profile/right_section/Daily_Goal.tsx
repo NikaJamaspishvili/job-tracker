@@ -5,7 +5,6 @@ import AddGoal from "./AddGoal"
 import { updateGoal } from "@/server/goals/main";
 
 import { useState } from "react";
-import { NutIcon } from "lucide-react";
 
 const Daily_Goal = ({daily_goal,sent,setResult}:{daily_goal:number | undefined,sent:number,setResult:React.Dispatch<React.SetStateAction<any>>}) => {
   const state = daily_goal && daily_goal > 0 ? "goal" : "addgoal";
@@ -24,13 +23,11 @@ const Daily_Goal = ({daily_goal,sent,setResult}:{daily_goal:number | undefined,s
 
   return (
     <div className="border w-full h-full items-center">
-      {show === "goal" && daily_goal && (
+      
         <div className="flex flex-col gap-5">
-          <Goal date="today" goal={daily_goal as number} sent={sent} radius_={80} stroke_={12}/>
-          <button onClick={handleClearClick} className="bg-red-400 p-3 rounded-md w-4/5 mt-3 mx-auto text-white text-xl cursor-pointer">clear goal</button>
+          <Goal date="today" goal={daily_goal || null} sent={sent} radius_={80} stroke_={12}/>
+          {show === "goal" ? <button onClick={handleClearClick} className="bg-red-400 p-3 rounded-md w-4/5 mt-3 mx-auto text-white text-xl cursor-pointer">clear goal</button> : <AddGoal setShow_={setShow} setResult={setResult}/>}
         </div>
-      )}
-      {show === "addgoal" && <AddGoal setShow_={setShow} setResult={setResult}/>}
     </div>
   )
 }

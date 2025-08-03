@@ -4,11 +4,14 @@ import { AddApplication } from "@/server/applications/main";
 import { ApplicationSchema } from "@/schema/applications";
 import Message from "../errors/Message";
 import { X } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const AddJob = ({setShowAddJob}:{setShowAddJob:React.Dispatch<React.SetStateAction<boolean>>}) => {
     const [isPending,startTransition] = useTransition();
     const [points,setPoints] = useState(1);
     const [errors,setErrors] = useState<{field:PropertyKey,message:string}[]>([]);
+    const router = useRouter();
+
     const array = [
         {id:1,label:"Job Title",name:"job_title"},
         {id:2,label:"Company",name:"company"},
@@ -39,6 +42,7 @@ const AddJob = ({setShowAddJob}:{setShowAddJob:React.Dispatch<React.SetStateActi
             const result = await AddApplication(data);
             if(result?.success){
                 setShowAddJob(false);
+                router.push("/");
             }
         })
     }
