@@ -1,5 +1,5 @@
 import { X } from "lucide-react"
-import { getSingleApplication, updateApplication,deleteApplication } from "@/server/applications/main"
+import { getSingleApplication, updateApplication } from "@/server/applications/main"
 import { useEffect, useState,useTransition } from "react"
 import Loading from "../Loading";
 
@@ -79,20 +79,20 @@ const Job_Details = ({popup,setPopup,setApps}:Props) => {
         })
     }
 
-    const handleDelete = async () => {
-        startTransition2(async ()=>{
-            const result = await deleteApplication(object.id);
-            if(result.success){
-                setApps((prev)=>{
-                    const array = [...prev];
-                    const index = array.indexOf(array.find(item => item.id === object.id));
-                    array.splice(index,1);
-                    return array;
-                })
-                setPopup(false);
-            }
-        });
-    }
+    // const handleDelete = async () => {
+    //     startTransition2(async ()=>{
+    //         const result = await deleteApplication(object.id);
+    //         if(result.success){
+    //             setApps((prev)=>{
+    //                 const array = [...prev];
+    //                 const index = array.indexOf(array.find(item => item.id === object.id));
+    //                 array.splice(index,1);
+    //                 return array;
+    //             })
+    //             setPopup(false);
+    //         }
+    //     });
+    // }
 
   return (
     <div className="fixed z-10 bg-white shadow-2xl shadow-black w-4/5 h-[90%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center rounded-xl">
@@ -112,8 +112,7 @@ const Job_Details = ({popup,setPopup,setApps}:Props) => {
         </form>
         <div className="w-full flex gap-3 items-center justify-center mt-5">
             <button onClick={()=>{setIsEditable(!isEditable); error && setError("");}} className="mt-3 bg-blue-500 max-w-[300px] p-3 rounded-md w-4/5 text-white text-xl cursor-pointer">{isEditable ? "close" : "edit"}</button>
-            <button onClick={handleDelete} className="mt-3 bg-red-500 max-w-[300px] p-3 rounded-md w-4/5 text-white text-xl cursor-pointer">{isPending2 ? "loading..." : "delete"}</button>
-        </div>
+            {/*<button onClick={handleDelete} className="mt-3 bg-red-500 max-w-[300px] p-3 rounded-md w-4/5 text-white text-xl cursor-pointer">{isPending2 ? "loading..." : "delete"}</button>*/}        </div>
     </div>
   )
 }
