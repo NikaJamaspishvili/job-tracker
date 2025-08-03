@@ -2,7 +2,6 @@ import { X } from "lucide-react"
 import { getSingleApplication, updateApplication,deleteApplication } from "@/server/applications/main"
 import { useEffect, useState,useTransition } from "react"
 import Loading from "../Loading";
-import { it } from "node:test";
 
 interface Props{
     popup:boolean | number,
@@ -16,14 +15,15 @@ const Job_Details = ({popup,setPopup,setApps}:Props) => {
     const [isPending,startTransition] = useTransition();
     const [isPending2,startTransition2] = useTransition();
     const [error,setError] = useState('');
-    const [value,setValue] = useState(5);
+    const [value,setValue] = useState(0);
 
     useEffect(()=>{
         async function fetchData(){
             const result = await getSingleApplication(popup as number);
             if(result.success){
-                console.log(result);
                 setObject(result.data[0]);
+                console.log(result.data[0].points);
+                setValue(result.data[0].points);
             }
         }
         fetchData();
@@ -58,6 +58,8 @@ const Job_Details = ({popup,setPopup,setApps}:Props) => {
                 object[key] = key1;
             }
         }
+
+        console.log(editedData);
 
         if(Object.keys(editedData).length === 0){
             return setError("No changes were made");
@@ -101,7 +103,7 @@ const Job_Details = ({popup,setPopup,setApps}:Props) => {
                 <div key={result.id} className="flex flex-col gap-2 bg-gray-300 rounded-md p-3">
                     <label>{result.label}</label>
                     {result.name === "points" && <p>{value}</p>}
-                    <input min={1} max={10} onChange={(e)=>{result.name === "points" && Number(setValue(Number(e.target.value)))}} className="outline-0 border rounded-md p-2" name={result.name} readOnly={isEditable ? false : true} type={isEditable ? result.type : "text"} placeholder={result.value || ""} />
+                    <input min={1} max={10} defaultValue={result.value} onChange={(e)=>{result.name === "points" && setValue(Number(e.target.value))}} className="outline-0 border rounded-md p-2" name={result.name} readOnly={isEditable ? false : true} type={isEditable ? result.type : "text"} />
                 </div>
             ))}
         </section>

@@ -4,13 +4,11 @@ import { AddApplication } from "@/server/applications/main";
 import { ApplicationSchema } from "@/schema/applications";
 import Message from "../errors/Message";
 import { X } from "lucide-react";
-import { useRouter } from "next/navigation";
 
-const AddJob = ({setShowAddJob}:{setShowAddJob:React.Dispatch<React.SetStateAction<boolean>>}) => {
+const AddJob = ({setShowAddJob,setApps}:{setShowAddJob:React.Dispatch<React.SetStateAction<boolean>>,setApps:React.Dispatch<React.SetStateAction<any[]>>}) => {
     const [isPending,startTransition] = useTransition();
     const [points,setPoints] = useState(1);
     const [errors,setErrors] = useState<{field:PropertyKey,message:string}[]>([]);
-    const router = useRouter();
 
     const array = [
         {id:1,label:"Job Title",name:"job_title"},
@@ -27,7 +25,7 @@ const AddJob = ({setShowAddJob}:{setShowAddJob:React.Dispatch<React.SetStateActi
         e.preventDefault();
 
         const formData = new FormData(e.currentTarget as HTMLFormElement);
-        const data = Object.fromEntries(formData.entries());
+        const data:any = Object.fromEntries(formData.entries());
         console.log(data);
 
         const validatedResult = ApplicationSchema.safeParse(data);
@@ -41,8 +39,13 @@ const AddJob = ({setShowAddJob}:{setShowAddJob:React.Dispatch<React.SetStateActi
         startTransition(async ()=>{
             const result = await AddApplication(data);
             if(result?.success){
+                setApps(prev => {
+                    const array = [...prev];
+                    data["id"] = result.appId;
+                    array.unshift(data);
+                    return array;
+                })
                 setShowAddJob(false);
-                router.push("/");
             }
         })
     }

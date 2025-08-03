@@ -21,7 +21,7 @@ export const AddApplication = async (data: Application) => {
     const query = "INSERT INTO applications (job_title,company,platform,job_link,points,level,date,description,created_at,userId,current_goal) VALUES (?,?,?,?,?,?,?,?,?,?,(select daily_goal from users where id=?))";
     try{
         const result = await callDatabase(query,[...Object.values(data),formatted,userId,userId]);
-        return {success:true}
+        return {success:true,appId:result.insertId};
     }catch(err){
         throw new Error("Error has appeared when adding application");
     }
@@ -30,6 +30,7 @@ export const AddApplication = async (data: Application) => {
 
 export const getApplications = async (query:string) => {
     const userId = await verifyJwt();
+    console.log(query);
     try{
         const result = await callDatabase(query,[userId]);
         if(Array.isArray(result)) return {success:true,data:result};

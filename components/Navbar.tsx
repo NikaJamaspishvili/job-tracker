@@ -3,9 +3,12 @@
 import Image from "next/image"
 import notfound from "@/public/NotFound.png";
 import { useRouter } from "next/navigation";
+import { useMyContext } from "@/context/Mycontext";
 
-const Navbar = ({setShowAddJob}:{setShowAddJob:React.Dispatch<React.SetStateAction<boolean>>}) => {
+const Navbar = () => {
   const router = useRouter();
+  const {setShowAddJob,showAddJob} = useMyContext();
+  console.log(showAddJob);
   return (
     <div className=" fixed top-0 left-0 w-full bg-gray-200 px-5 py-2">
       <div className="flex items-center justify-between max-w-[1200px] w-[95%] mx-auto">
@@ -14,7 +17,7 @@ const Navbar = ({setShowAddJob}:{setShowAddJob:React.Dispatch<React.SetStateActi
       <section className="flex gap-5 [&>a]:cursor-pointer">
         <a onClick={()=>router.push("/")}>Home</a>
         <a>Events</a>
-        <a onClick={()=>setShowAddJob(true)}>Add Job</a>
+        <a onClick={()=>{window.location.pathname !== "/" && router.push("/");setShowAddJob(true)}}>Add Job</a>
         <a onClick={()=>router.push("/profile")}>Profile</a>
       </section>
       </div>
