@@ -60,7 +60,7 @@ const AddJob = ({setShowAddJob,setApps}:{setShowAddJob:React.Dispatch<React.SetS
     <div className="fixed bg-black/30 border w-full h-full left-0 top-0 flex items-center justify-center z-10">
         <form onSubmit={handleSubmit} className="bg-white relative w-[95%] border max-w-[750px] rounded-lg flex flex-col items-center gap-5 overflow-y-auto p-5">
             <button type="button" className="absolute top-2 right-2 cursor-pointer text-red-500" onClick={() => setShowAddJob(false)}><X /></button>
-            <h1 className="text-4xl text-center font-manrope font-bold">Add Job</h1>
+            <h1 className="text-3xl text-center font-manrope font-bold">Add Job</h1>
 
             <div className="grid grid-cols-2 max-sm:grid-cols-1 gap-5 w-full">
                 {array.map(result => (

@@ -95,7 +95,7 @@ const Filter = ({values,setValues,fetchData}:Props) => {
         </div>
         {isOpen.length > 0 && 
         (
-        <form onSubmit={handleSubmit} className="flex [&>input]:w-[400px] [&>input]:font-sora font-light  mt-5 flex-col items-center [&>input]:border [&>input]:p-2 [&>input]:rounded-lg [&>input]:outline-0">
+        <form onSubmit={handleSubmit} className="flex [&>input]:w-[400px] [&>input]:font-sora font-light  mt-10 flex-col items-center [&>input]:border [&>input]:p-2 [&>input]:rounded-lg [&>input]:outline-0">
         {isOpen === "level" ? 
         (
             <select name={isOpen} className="bg-white py-2 px-2 text-sm rounded-xl outline-0 border w-[200px] cursor-pointer">
