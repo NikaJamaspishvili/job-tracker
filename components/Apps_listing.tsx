@@ -19,7 +19,7 @@ const Apps_listing = ({apps,setApps}:{apps:Application[],setApps:React.Dispatch<
     <PackageOpenIcon className="w-[100px] h-[100px]"/>
     </div>
   return (
-    <div className="flex flex-col gap-12 mt-10 w-full border-t border-gray-300 pt-10">
+    <div className="flex flex-col gap-8 mt-10 w-full border-t border-gray-300 pt-10">
     {popup && <Job_Details popup={popup} setPopup={setPopup} setApps={setApps}/>}
     {apps.map((result:Application,index) => (
       <div onClick={()=>setPopup(result.id)} key={index} className="flex gap-5 rounded-xl p-5 justify-around border-2 border-blue-500 bg-white text-black hover:scale-101 transition-all duration-100 cursor-pointer shadow-xl">
