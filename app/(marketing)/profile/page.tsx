@@ -4,6 +4,7 @@ import LeftSection from "@/components/profile/LeftSection";
 import RightSection from "@/components/profile/right_section/RightSection";
 import { useState,useEffect } from "react";
 import { getUserInfo } from "@/server/goals/main";
+import Loading from "@/components/Loading";
 
 const Page = () => {
   const [navigation,setNavigation] = useState('goal');
@@ -20,7 +21,7 @@ const Page = () => {
     fetch();
   },[]);
 
-  if(result && result.length === 0) return <div>Loading...</div>
+  if(result && result.length === 0) return <Loading />
   return (
     <div className="pt-25 flex flex-col md:flex-row md:h-screen w-full">
       <LeftSection email={result[0].email} setNavigation={setNavigation} navigation={navigation}/>

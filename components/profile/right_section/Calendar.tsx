@@ -38,7 +38,7 @@ const Calendar = () => {
     fetch();
   },[range]);
 
-  if(array && array.length === 0) return <Loading />
+  if(array && array.length === 0) return <Loading isFixed={true} />
   return (
     <div className="flex flex-col py-5">
       {popup.length > 0 && <Popup date={popup} setPopup={setPopup}/>}
