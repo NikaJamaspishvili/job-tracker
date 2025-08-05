@@ -60,13 +60,11 @@ export default function Home() {
   },[])
 
   const {showAddJob,setShowAddJob} = useMyContext();
-
-  if(isPending2) return <Loading />
   return (
     <div className="pt-25">
       {showAddJob && <AddJob setShowAddJob={setShowAddJob} setApps={setApps}/>}
       <Filter values={values} setValues={setValues} fetchData={fetchData}/>
-      <Jobs apps={apps} setApps={setApps} showButton={showButton} fetchMoreData={fetchMoreData} isPending={isPending}/>
+      <Jobs apps={apps} isPending2={isPending2} setApps={setApps} showButton={showButton} fetchMoreData={fetchMoreData} isPending={isPending}/>
     </div>
   );
 }
