@@ -2,15 +2,16 @@ import { X } from "lucide-react";
 import { getSingleApplication, updateApplication } from "@/server/applications/main";
 import { useEffect, useState, useTransition } from "react";
 import Loading from "../Loading";
+import { Application } from "@/schema/applications";
 
 interface Props {
-  popup: boolean | number;
-  setPopup: React.Dispatch<React.SetStateAction<boolean | number>>;
-  setApps: React.Dispatch<React.SetStateAction<any[]>>;
+  popup: boolean | number | string | File;
+  setPopup: React.Dispatch<React.SetStateAction<boolean | number | string | File>>;
+  setApps: React.Dispatch<React.SetStateAction<Application[]>>;
 }
 
 const Job_Details = ({ popup, setPopup, setApps }: Props) => {
-  const [object, setObject] = useState<any>(null);
+  const [object, setObject] = useState<Application | null>(null);
   const [isEditable, setIsEditable] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState('');
@@ -44,7 +45,7 @@ const Job_Details = ({ popup, setPopup, setApps }: Props) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget as HTMLFormElement);
     const data = Object.fromEntries(formData.entries());
-    const editedData: any = {};
+    const editedData: { [key: string]: string } = {};
 
     for (const key of Object.keys(data)) {
       const key1 = String(data[key]).trim();
@@ -88,7 +89,7 @@ const Job_Details = ({ popup, setPopup, setApps }: Props) => {
               <input
                 min={1}
                 max={10}
-                defaultValue={result.value}
+                defaultValue={result.value as unknown as string}
                 onChange={(e) => result.name === "points" && setValue(Number(e.target.value))}
                 className={`outline-0 border border-gray-300 rounded-md p-2 text-sm ${isEditable ? "bg-white" : "bg-gray-200"} transition`}
                 name={result.name}

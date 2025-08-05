@@ -4,16 +4,15 @@ import Goal from "./Goal"
 import AddGoal from "./AddGoal"
 import { updateGoal } from "@/server/goals/main";
 import { Trash } from "lucide-react";
-
 import { useState } from "react";
 
-const Daily_Goal = ({daily_goal,sent,setResult}:{daily_goal:number | undefined,sent:number,setResult:React.Dispatch<React.SetStateAction<any>>}) => {
+const Daily_Goal = ({daily_goal,sent,setResult}:{daily_goal:number | undefined,sent:number,setResult:React.Dispatch<React.SetStateAction<{daily_goal:number,email:string,sent:number}[]>>}) => {
   const state = daily_goal && daily_goal > 0 ? "goal" : "addgoal";
   const [show,setShow] = useState(state);
   console.log(daily_goal,show);
 
   const handleClearClick = async () => {
-    setResult((prev:any) => {
+    setResult((prev:{daily_goal:number,email:string,sent:number}[]) => {
       const updated = [...prev];
       updated[0] = { ...updated[0], daily_goal: 0 };
       return updated;

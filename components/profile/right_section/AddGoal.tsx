@@ -2,7 +2,7 @@
 import { useState,useTransition } from "react";
 import { updateGoal } from "@/server/goals/main";
 
-const AddGoal = ({setResult,setShow_}:{setResult:React.Dispatch<React.SetStateAction<any>>,setShow_:React.Dispatch<React.SetStateAction<string>>}) => {
+const AddGoal = ({setResult,setShow_}:{setResult:React.Dispatch<React.SetStateAction<{daily_goal:number,email:string,sent:number}[]>>,setShow_:React.Dispatch<React.SetStateAction<string>>}) => {
     const [show,setShow] = useState(false);
     const [isPending,startTransition] = useTransition();
 
@@ -13,7 +13,7 @@ const AddGoal = ({setResult,setShow_}:{setResult:React.Dispatch<React.SetStateAc
       startTransition(async ()=>{
         const result = await updateGoal(goal as unknown as number);
         if(result.success){
-          setResult((prev: any) => {
+          setResult((prev: {daily_goal:number,email:string,sent:number}[]) => {
             const numeric = Number(goal);
             const updated = [...prev];
             updated[0] = { ...updated[0], daily_goal: numeric };

@@ -1,11 +1,11 @@
 "use client";
 import React, { useTransition,useState } from "react";
 import { AddApplication } from "@/server/applications/main";
-import { ApplicationSchema } from "@/schema/applications";
+import { Application, ApplicationSchema } from "@/schema/applications";
 import Message from "../errors/Message";
 import { X } from "lucide-react";
 
-const AddJob = ({setShowAddJob,setApps}:{setShowAddJob:React.Dispatch<React.SetStateAction<boolean>>,setApps:React.Dispatch<React.SetStateAction<any[]>>}) => {
+const AddJob = ({setShowAddJob,setApps}:{setShowAddJob:React.Dispatch<React.SetStateAction<boolean>>,setApps:React.Dispatch<React.SetStateAction<Application[]>>}) => {
     const [isPending,startTransition] = useTransition();
     const [points,setPoints] = useState(1);
     const [errors,setErrors] = useState<{field:PropertyKey,message:string}[]>([]);
@@ -25,7 +25,7 @@ const AddJob = ({setShowAddJob,setApps}:{setShowAddJob:React.Dispatch<React.SetS
         e.preventDefault();
 
         const formData = new FormData(e.currentTarget as HTMLFormElement);
-        const data:any = Object.fromEntries(formData.entries());
+        const data:Application = Object.fromEntries(formData.entries());
         console.log(data);
 
         const validatedResult = ApplicationSchema.safeParse(data);
@@ -41,7 +41,7 @@ const AddJob = ({setShowAddJob,setApps}:{setShowAddJob:React.Dispatch<React.SetS
             if(result?.success){
                 setApps(prev => {
                     const array = [...prev];
-                    data["id"] = result.appId;
+                    data["id"] = result.appId as unknown as FormDataEntryValue;
                     array.unshift(data);
                     return array;
                 })

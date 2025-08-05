@@ -35,7 +35,8 @@ export const getUserInfo = async () => {
 
     try{
         const result = await callDatabase(query,[formatted,userId]);
-        return {success:true,result:result};
+        if(Array.isArray(result)) return {success:true,result:result};
+        return {success:false,result:[]};
     }catch(err){
         console.log(err);
         throw new Error("Error has appeared when getting user info in profile");
@@ -63,7 +64,8 @@ export const getGoalsInfo = async (range:number) => {
     console.log(formatted);
     try{
         const result = await callDatabase(query,[today,formatted,userId]);
-        return {success:true,result:result};
+        if(Array.isArray(result)) return {success:true,result:result};
+        return {success:false,result:[]};
     }catch(err){
         console.log(err);
         throw new Error("Error has appeared when getting goals calendar info");

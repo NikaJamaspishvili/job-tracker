@@ -5,9 +5,9 @@ import RightSection from "@/components/profile/right_section/RightSection";
 import { useState,useEffect } from "react";
 import { getUserInfo } from "@/server/goals/main";
 
-const page = () => {
+const Page = () => {
   const [navigation,setNavigation] = useState('goal');
-  const [result,setResult] = useState<any>([]);
+  const [result,setResult] = useState<{daily_goal:number,email:string,sent:number}[]>([]);
 
   useEffect(()=>{
     const fetch = async () => {
@@ -31,4 +31,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page;

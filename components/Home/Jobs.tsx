@@ -1,23 +1,14 @@
 interface Props{
-  apps:any,
-  setApps:React.Dispatch<React.SetStateAction<any[]>>,
+  apps:Application[],
+  setApps:React.Dispatch<React.SetStateAction<Application[]>>,
   fetchMoreData:()=>void,
   showButton:boolean,
   isPending:boolean,
-  setPopup:React.Dispatch<React.SetStateAction<boolean | number>>,
 }
+import { Application } from "@/schema/applications"
 import Apps_listing from "../Apps_listing"
 
-const Jobs = ({apps,setApps,showButton,fetchMoreData,isPending,setPopup}:Props) => {
-
-  const data = [
-    {id:1,label:"job_title"},
-    {id:2,label:"company"},
-    {id:3,label:"date"},
-    {id:4,label:"level"},
-    {id:5,label:"points"},
-    {id:6,label:"platform"},
-  ]
+const Jobs = ({apps,setApps,showButton,fetchMoreData,isPending}:Props) => {
 
   return (
     <div className="py-10"> 

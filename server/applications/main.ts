@@ -55,7 +55,7 @@ export const getSingleApplication = async (id:number) => {
     }
 }
 
-export const updateApplication = async (id:number,data:Application) => {
+export const updateApplication = async (id:FormDataEntryValue,data:Application) => {
     try{
         const keys = Object.keys(data);
         const values = Object.values(data);

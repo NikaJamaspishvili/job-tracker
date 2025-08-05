@@ -5,8 +5,15 @@ import { Frown } from "lucide-react";
 import Loading from "@/components/Loading";
 import Popup from "./Popup";
 
+interface Props{
+  created_at:Date,
+  current_goal:number,
+  row_count:number,
+  days:number
+}
+
 const Calendar = () => {
-  const [array,setArray] = useState<any>([]);
+  const [array,setArray] = useState<Props[]>([]);
   const [range,setRange] = useState<number>(7);
   const [popup,setPopup] = useState("");
   useEffect(()=>{
@@ -14,17 +21,17 @@ const Calendar = () => {
       const result = await getGoalsInfo(range);
 
       if(result.success){
-        const data: any = result.result;
-        let newArray = [];
+        const data: Props[] = result.result;
+        const newArray = [];
         for(let i=range;i>=1;i--){
-          const test = data.find((item:any) => item.days === i);
+          const test = data.find((item:Props) => item.days === i);
             if(test){
                 newArray.push(test);
             }else{
                 newArray.push(null);
             }
         }
-        setArray(newArray);
+        setArray(newArray as Props[]);
       }
 
     }
@@ -43,7 +50,7 @@ const Calendar = () => {
         </select>
 
         <section className="flex flex-col gap-10 pt-10">
-          {array.map((result:any,index:number) => {
+          {array.map((result:Props,index:number) => {
             if(result === null) return (
               <div key={index} className="flex flex-col gap-5 items-center text-2xl bg-gray-100 shadow-xl p-5 rounded-lg mx-auto w-4/5">
                 <h1 className="text-2xl font-bold flex gap-2 justify-center items-center font-manrope">Day <span className="text-blue-500">{range - (index)}</span></h1>

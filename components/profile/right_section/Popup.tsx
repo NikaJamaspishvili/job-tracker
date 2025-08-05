@@ -3,9 +3,10 @@ import { useEffect, useState } from "react"
 import { getApplication } from "@/server/goals/main";
 import Loading from "@/components/Loading";
 import Apps_listing from "@/components/Apps_listing";
+import { Application } from "@/schema/applications";
 
 const Popup = ({date,setPopup}:{date:string,setPopup:React.Dispatch<React.SetStateAction<string>>}) => {
-    const [apps,setApps] = useState<any>([]);
+    const [apps,setApps] = useState<Application[]>([]);
     useEffect(()=>{
         async function fetch(){
             const result = await getApplication(date);

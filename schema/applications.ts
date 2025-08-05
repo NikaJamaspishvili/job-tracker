@@ -1,9 +1,8 @@
 import z from "zod";
 
 export interface Application{
-    [k: string]: FormDataEntryValue;
+    [k: string | number]: FormDataEntryValue;
 }
-
 
 export const ApplicationSchema = z.object({
     company:z.string().trim().min(1,"Company is required"),
