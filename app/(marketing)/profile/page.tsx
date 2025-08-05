@@ -22,9 +22,9 @@ const page = () => {
 
   if(result && result.length === 0) return <div>Loading...</div>
   return (
-    <div className="pt-25 flex flex-col md:flex-row md:h-screen w-full gap-3">
+    <div className="pt-25 flex flex-col md:flex-row md:h-screen w-full">
       <LeftSection email={result[0].email} setNavigation={setNavigation} navigation={navigation}/>
-      <section className="bg-gray-300 w-full flex">
+      <section className="bg-white w-full flex">
       <RightSection setResult={setResult} daily_goal={result[0].daily_goal} sent={result[0].sent} navigation={navigation}/>
       </section>
     </div>

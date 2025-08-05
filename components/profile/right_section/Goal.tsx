@@ -41,8 +41,8 @@ const Goal = ({date,goal,sent,radius_,stroke_}:{date:string,goal:number | null,s
     </svg>
     <label className="text-2xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">{sent}</label>
     </div>
-    <h1 className="text-lg"><span className="font-bold">{goal !== null ? sent+" / "+goal : sent}</span> Applications sent <span className="font-bold text-blue-900">{date}</span></h1>
-    {goal!== null && sent >= goal && <h1>Your goal has been achieved ✅</h1>}
+    <h1 className="text-lg font-sora"><span className="font-bold">{goal !== null ? sent+" / "+goal : sent}</span> Applications sent <span className="font-bold text-blue-900">{date}</span></h1>
+    {goal!== null && sent >= goal && <h1 className="font-sora text-green-500">Your goal has been achieved ✅</h1>}
     </section>
   )
 }

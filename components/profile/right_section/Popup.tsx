@@ -18,9 +18,11 @@ const Popup = ({date,setPopup}:{date:string,setPopup:React.Dispatch<React.SetSta
 
     if(apps.length === 0) return <Loading />
     return (
-    <div className="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-[90%] h-[90%] flex items-center justify-center bg-white z-10 rounded-xl">
+    <div className="fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-[90%] h-[90%] flex flex-col items-center bg-white border-2 shadow-2xl shadow-black z-10 rounded-xl">
         <X onClick={()=>setPopup("")} className="absolute top-3 right-3 text-red-500 w-[30px] h-[30px] cursor-pointer"/>
-        <Apps_listing setApps={setApps} apps={apps}/>
+        <div className="w-11/12 mt-10">
+            <Apps_listing setApps={setApps} apps={apps}/>
+        </div>
     </div>
   )
 }

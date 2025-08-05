@@ -13,14 +13,14 @@ const Apps_listing = ({apps,setApps}:any) => {
   const [popup,setPopup] = useState<number | boolean>(false);
 
   return (
-    <div className="flex flex-col gap-10 mt-10">
+    <div className="flex flex-col gap-12 mt-10 w-full">
     {popup && <Job_Details popup={popup} setPopup={setPopup} setApps={setApps}/>}
     {apps.map((result:any,index:number) => (
-      <div onClick={()=>setPopup(result.id)} key={index} className="flex gap-5 rounded-xl p-3 justify-around bg-gray-300 hover:scale-101 transition-all duration-100 cursor-pointer">
+      <div onClick={()=>setPopup(result.id)} key={index} className="flex gap-5 rounded-xl p-5 justify-around border-2 border-blue-500 bg-white text-black hover:scale-101 transition-all duration-100 cursor-pointer shadow-xl">
         {data.map(item => (
           <div key={item.id} className="flex flex-col gap-3">
-            <h1>{item.label}</h1>
-            <p className="text-gray-500">{result[item.label]}</p>
+            <h1 className="font-semibold text-lg font-manrope">{item.label === "job_title" ? "Job Title" : item.label}</h1>
+            <p className="text-black font-light font-sora">{result[item.label]}</p>
           </div>
         ))}
       </div>

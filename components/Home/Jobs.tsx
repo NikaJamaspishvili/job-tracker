@@ -20,12 +20,10 @@ const Jobs = ({apps,setApps,showButton,fetchMoreData,isPending,setPopup}:Props) 
   ]
 
   return (
-    <div className="py-10">
-      <h1 className="text-center text-2xl font-bold mt-5">Job Applications you have sent</h1>
-      
+    <div className="py-10"> 
       <section className="flex flex-col">
         <Apps_listing apps={apps} setApps={setApps}/>
-        {showButton ? (apps.length > 0 && <button disabled={isPending} onClick={fetchMoreData} className="bg-gray-400 w-4/5 max-w-[200px] rounded-xl text-white mt-3 p-2 cursor-pointer mx-auto">{isPending ? "Loading..." : "Load More"}</button>) : <p className="text-center text-red-500 text-2xl mt-5">You have reached the end</p>}
+        {showButton ? (apps.length > 0 && <button disabled={isPending} onClick={fetchMoreData} className="bg-blue-500 w-4/5 max-w-[200px] rounded-xl text-white font-sora mt-3 p-2 cursor-pointer mx-auto">{isPending ? "Loading..." : "Load More"}</button>) : <p className="text-center text-red-500 text-xl font-sora mt-5">You have reached the end</p>}
       </section>
     </div>
   )
