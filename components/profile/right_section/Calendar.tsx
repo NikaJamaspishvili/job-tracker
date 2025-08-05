@@ -51,7 +51,7 @@ const Calendar = () => {
                 </div>
               )
 
-            return <div onClick={()=>setPopup(array[index].created_at.toLocaleDateString('en-CA'))} key={index} className="text-center hover:scale-101 transition-all duration-100 flex flex-col gap-5 w-4/5 mx-auto p-5 rounded-lg bg-gray-100 shadow-xl  cursor-pointer">
+            return <div onClick={()=>setPopup(array[index].created_at.toLocaleDateString('en-CA'))} key={index} className="text-center hover:scale-101 transition-all duration-100 flex flex-col gap-5 w-4/5 mx-auto p-5 rounded-lg bg-gray-100 shadow-sm shadow-orange-500 border border-orange-500 cursor-pointer">
               <h1 className="text-2xl font-bold flex gap-2 justify-center items-center font-manrope">Day <span className="text-2xl text-orange-500">{array[index].days}</span></h1>
               <Goal date={(array[index].created_at).toLocaleDateString('en-CA')} goal={array[index].current_goal} sent={array[index].row_count}/>
             </div>
