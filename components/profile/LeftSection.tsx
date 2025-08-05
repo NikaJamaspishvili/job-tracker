@@ -8,7 +8,7 @@ const LeftSection = ({setNavigation,navigation,email}:{setNavigation:React.Dispa
   ];
 
   return (
-    <section className="flex flex-col py-3 my-5 gap-2 bg-white border-black border border-r-0 p-3 rounded-lg rounded-r-none items-center w-full">
+    <section className="flex flex-col py-3 my-5 gap-2 bg-white border-gray-300 border border-r-0 p-3 rounded-lg rounded-r-none items-center w-full">
         <h1 className="text-md outline-0 bg-white cursor-default text-center flex items-center justify-center gap-3 rounded-md w-4/5 mx-auto p-3 text-gray-500"><Mail /> {email}</h1>
       <div className="w-full flex flex-col gap-2 mt-3 [&>button]:cursor-pointer">
         {array.map(result => (

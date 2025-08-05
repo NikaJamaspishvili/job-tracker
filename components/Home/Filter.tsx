@@ -78,7 +78,7 @@ const Filter = ({values,setValues,fetchData}:Props) => {
   return (
     <div>
         <div className="flex justify-between w-full gap-10 mt-5">
-            <section className="grid grid-cols-6 gap-3 w-fit">
+            <section className="grid grid-cols-6 max-[1200px]:grid-cols-4 max-[900px]:grid-cols-3 max-[800px]:grid-cols-2 gap-3 w-fit">
                 {array.map(result => (
                     <div onClick={()=>handleFilterBlockClick(result.name)} key={result.id} className="cursor-pointer flex items-center">
                         <p className={`font-sora font-bold ${isOpen === result.name ? "text-red-500" : ""}`}>{result.label}</p>
@@ -89,8 +89,8 @@ const Filter = ({values,setValues,fetchData}:Props) => {
             </section>
 
             <section className="flex gap-3 justify-end [&>button]:w-[200px] [&>button]:py-3">
-                <button onClick={handleFilter} className="bg-blue-600 w-full rounded-md text-white cursor-pointer text-lg font-sora">Filter</button>
-                <button onClick={handleClearButton} className="bg-red-600 w-full rounded-md text-white cursor-pointer text-lg font-sora">Clear</button>
+                <button onClick={handleFilter} className="bg-blue-600 w-full h-fit rounded-md text-white cursor-pointer text-lg font-sora">Filter</button>
+                <button onClick={handleClearButton} className="bg-red-600 w-full h-fit rounded-md text-white cursor-pointer text-lg font-sora">Clear</button>
             </section>
         </div>
         {isOpen.length > 0 && 
