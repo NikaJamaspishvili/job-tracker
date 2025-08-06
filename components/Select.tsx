@@ -1,6 +1,6 @@
 const Select = ({name,value}:{name:string,value?:string}) => {
   
-    let options = [
+    const options = [
         {id:0,name:"Applied",value:"applied"},
         {id:1,name:"Rejected",value:"rejected"},
         {id:2,name:"Interview",value:"interview"},
@@ -8,7 +8,7 @@ const Select = ({name,value}:{name:string,value?:string}) => {
     ]
 
     if(value){
-        const item = options.find(item => item.value === value) as any;
+        const item = options.find(item => item.value === value) as {id:number,name:string,value:string};
         const index = item?.id as number;
         const item_to_change = options[0];
         options[0] = item;
