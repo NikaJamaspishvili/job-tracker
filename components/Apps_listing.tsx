@@ -3,6 +3,7 @@ import Job_Details from "./Home/Job_Details"
 import { useState } from "react"
 import { PackageOpenIcon } from "lucide-react";
 import Loading from "./Loading";
+import { string } from "zod";
 
 const Apps_listing = ({apps,setApps,isPending}:{apps:Application[],isPending:boolean,setApps:React.Dispatch<React.SetStateAction<Application[]>>}) => {
   const data = [
@@ -13,6 +14,13 @@ const Apps_listing = ({apps,setApps,isPending}:{apps:Application[],isPending:boo
     {id:5,label:"points"},
     {id:6,label:"platform"},
   ]
+
+  const colors_for_level: {[k: string]:string} = {
+    applied:"bg-yellow-500",
+    interview:"bg-purple-300",
+    hired:"bg-green-300",
+    rejected:"bg-red-300",
+  }
 
   const [popup,setPopup] = useState<number | boolean | File | string>(false);
   return (
@@ -30,7 +38,7 @@ const Apps_listing = ({apps,setApps,isPending}:{apps:Application[],isPending:boo
             {data.map(item => (
               <div key={item.id} className="flex flex-col gap-3">
                 <h1 className="font-semibold text-lg font-manrope">{item.label === "job_title" ? "Job Title" : item.label}</h1>
-                <p className="text-black font-light font-sora">{result[item.label] as string}</p>
+                <p className={`${item.label === "points" ? "bg-gray-300 w-[35px] h-[35px] flex items-center mx-auto justify-center p-2 rounded-full" : item.label === "level" && colors_for_level[result[item.label] as string] + " px-3 py-2 rounded-xl"} text-black font-light font-sora`}>{result[item.label] as string}</p>
               </div>
             ))}
           </div>

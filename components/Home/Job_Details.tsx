@@ -3,6 +3,7 @@ import { getSingleApplication, updateApplication } from "@/server/applications/m
 import { useEffect, useState, useTransition } from "react";
 import Loading from "../Loading";
 import { Application } from "@/schema/applications";
+import Select from "../Select";
 
 interface Props {
   popup: boolean | number | string | File;
@@ -86,16 +87,18 @@ const Job_Details = ({ popup, setPopup, setApps }: Props) => {
             <div key={result.id} className="flex flex-col gap-1 bg-gray-100 rounded-md p-4 shadow-sm">
               <label className="text-sm font-medium text-gray-700">{result.label}</label>
               {result.name === "points" && <p className="text-xs text-gray-500 mb-1">Selected: {value}</p>}
-              <input
-                min={1}
-                max={10}
-                defaultValue={result.value as unknown as string}
-                onChange={(e) => result.name === "points" && setValue(Number(e.target.value))}
-                className={`outline-0 border border-gray-300 rounded-md p-2 text-sm ${isEditable ? "bg-white" : "bg-gray-200"} transition`}
-                name={result.name}
-                readOnly={!isEditable}
-                type={isEditable ? result.type : "text"}
-              />
+              {result.name === "level" && isEditable ? <Select value={result.value as string} name={result.name}/> : (
+                <input
+                  min={1}
+                  max={10}
+                  defaultValue={result.value as unknown as string}
+                  onChange={(e) => result.name === "points" && setValue(Number(e.target.value))}
+                  className={`outline-0 border border-gray-300 rounded-md p-2 text-sm ${isEditable ? "bg-white" : "bg-gray-200"} transition`}
+                  name={result.name}
+                  readOnly={!isEditable}
+                  type={isEditable ? result.type : "text"}
+                />
+              )}
             </div>
           ))}
         </section>

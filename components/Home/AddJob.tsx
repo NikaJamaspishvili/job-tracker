@@ -4,6 +4,7 @@ import { AddApplication } from "@/server/applications/main";
 import { Application, ApplicationSchema } from "@/schema/applications";
 import Message from "../errors/Message";
 import { X } from "lucide-react";
+import Select from "../Select";
 
 const AddJob = ({setShowAddJob,setApps}:{setShowAddJob:React.Dispatch<React.SetStateAction<boolean>>,setApps:React.Dispatch<React.SetStateAction<Application[]>>}) => {
     const [isPending,startTransition] = useTransition();
@@ -67,13 +68,7 @@ const AddJob = ({setShowAddJob,setApps}:{setShowAddJob:React.Dispatch<React.SetS
                     <div className="flex flex-col gap-1" key={result.id}>
                         <label className="text-sm pl-2 flex items-center gap-3 font-manrope font-semibold">{result.label} {result.name === "points" && <span className="font-bold">{points}/10</span>}</label>
                         {result.name !== "level" && result.name !== "description" ? <input className="border outline-0 pl-2 py-1 text-sm font-sora text-gray-600" type={result.name === "date" ? "date" : result.name === "points" ? "range" : result.name === "job_link" ? "url" : "text"} onChange={(e)=>result.name === "points" && handlePointchange(e)} min={1} max={10} defaultValue={result.name === "points" ? points : ""} step={1} name={result.name} /> : result.name === "level" ? (
-                            <select name={result.name} className="bg-gray-200 py-2 px-2 text-sm rounded-xl outline-0">
-                                <option value="applied">Applied</option>
-                                <option value="rejected">Rejected</option>
-                                <option value="interview">Interview</option>
-                                <option value="meeting">Meeting</option>
-                                <option value="hired">Hired</option>
-                            </select>
+                            <Select name={result.name}/>
                         ) : result.name === "description" && (
                             <textarea maxLength={300} className="border outline-0 px-1 py-1 text-sm h-[100px] resize-none" placeholder="Max 300 characters" name={result.name} />   
                         )}

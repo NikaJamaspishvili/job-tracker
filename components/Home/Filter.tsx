@@ -2,6 +2,7 @@
 
 import { ChevronDown,ChevronUp } from "lucide-react";
 import React, { useState } from "react";
+import Select from "../Select";
 
 interface Props{
     values:{title:string,value:string[]}[],
@@ -90,7 +91,7 @@ const Filter = ({values,setValues,fetchData}:Props) => {
 
             <section className="flex gap-3 justify-end [&>button]:w-[200px] [&>button]:py-3">
                 <button onClick={handleFilter} className="bg-blue-600 w-full h-fit rounded-md text-white cursor-pointer text-lg font-sora">Filter</button>
-                <button onClick={handleClearButton} className="bg-red-600 w-full h-fit rounded-md text-white cursor-pointer text-lg font-sora">Clear</button>
+                {values.find(item => item.value.length > 0) && <button onClick={handleClearButton} className="bg-red-600 w-full h-fit rounded-md text-white cursor-pointer text-lg font-sora">Clear</button>}
             </section>
         </div>
         {isOpen.length > 0 && 
@@ -98,13 +99,7 @@ const Filter = ({values,setValues,fetchData}:Props) => {
         <form onSubmit={handleSubmit} className="flex [&>input]:w-[400px] [&>input]:font-sora font-light  mt-10 flex-col items-center [&>input]:border [&>input]:p-2 [&>input]:rounded-lg [&>input]:outline-0">
         {isOpen === "level" ? 
         (
-            <select name={isOpen} className="bg-white py-2 px-2 text-sm rounded-xl outline-0 border w-[200px] cursor-pointer">
-                <option value="applied">Applied</option>
-                <option value="rejected">Rejected</option>
-                <option value="interview">Interview</option>
-                <option value="meeting">Meeting</option>
-                <option value="hired">Hired</option>
-            </select>
+            <Select name={isOpen}/>
         ) :
         <>
         {isOpen === "points" && <label className="font-sora font-bold text-xl">{input}</label>}
