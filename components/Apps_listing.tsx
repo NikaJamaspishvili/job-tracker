@@ -3,7 +3,6 @@ import Job_Details from "./Home/Job_Details"
 import { useState } from "react"
 import { PackageOpenIcon } from "lucide-react";
 import Loading from "./Loading";
-import { string } from "zod";
 
 const Apps_listing = ({apps,setApps,isPending}:{apps:Application[],isPending:boolean,setApps:React.Dispatch<React.SetStateAction<Application[]>>}) => {
   const data = [

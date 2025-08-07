@@ -76,10 +76,10 @@ const Job_Details = ({ popup, setPopup, setApps }: Props) => {
   };
 
   return (
-    <div className="fixed z-50 bg-white/70 backdrop-blur-xl shadow-2xl border border-blue-200 w-[98vw] max-w-3xl h-[95vh] overflow-y-auto top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center rounded-2xl p-4 sm:p-8 transition-all">
+    <div className="fixed z-50 bg-white/90 backdrop-blur-xl shadow-2xl border-blue-200 w-[98vw] h-[98vh] overflow-y-auto top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center rounded-2xl p-4 sm:p-8 transition-all">
       <X onClick={() => setPopup(false)} className="absolute top-4 max-md:top-8 right-4 text-red-500 w-9 h-9 max-md:w-11 max-md:h-11 cursor-pointer hover:bg-red-100 rounded-full p-1 transition" />
 
-      <form onSubmit={handleSubmit} className="w-full flex flex-col items-center gap-6">
+      <form onSubmit={handleSubmit} className="w-full flex flex-col items-center gap-6 max-w-[700px] max-md:pt-10">
         <h2 className="text-2xl font-bold text-center text-blue-800 tracking-tight mb-2 font-sora drop-shadow">{isEditable ? "Edit Job Application" : "Job Application Details"}</h2>
 
         <section className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
