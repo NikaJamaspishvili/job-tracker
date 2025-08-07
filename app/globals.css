@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+html{
+    scroll-behavior: smooth;
+}
 
 @theme {
     --font-manrope:var(--font-manrope);

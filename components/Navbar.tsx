@@ -13,11 +13,11 @@ const Navbar = () => {
       <div className="flex items-center justify-between max-w-[1200px] w-[95%] mx-auto">
         <Image onClick={()=>router.push("/")} src={logo} alt="logo" className="w-20 cursor-pointer rounded-full" />
 
-        <section className="flex gap-7 [&>a]:cursor-pointer [&>a]:font-manrope font-semibold text-white">
+        <section className="flex gap-7 [&>a]:cursor-pointer [&>a]:font-manrope font-semibold text-white [&>a]:relative [&>a]:after:content-[''] [&>a]:after:block [&>a]:after:h-[2px] [&>a]:after:bg-white [&>a]:after:w-0 [&>a]:after:transition-all [&>a]:after:duration-300 [&>a]:hover:after:w-full [&>a]:after:absolute [&>a]:after:left-0 [&>a]:after:bottom-[-2px]">
           <a onClick={()=>router.push("/")}>Home</a>
           <a>Events</a>
           <a onClick={()=>router.push("/about")}>How it works?</a>
-          <a onClick={()=>{window.location.pathname !== "/" && router.push("/");setShowAddJob(true)}}>Add Job</a>
+          <a onClick={()=>{window.location.pathname !== "/" && router.push("/");setShowAddJob(true)}}>Add Application</a>
           <a onClick={()=>router.push("/profile")}>Profile</a>
         </section>
       </div>
