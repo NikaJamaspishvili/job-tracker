@@ -76,16 +76,16 @@ const Job_Details = ({ popup, setPopup, setApps }: Props) => {
   };
 
   return (
-    <div className="fixed z-50 bg-white shadow-2xl shadow-black w-[95%] md:w-[80%] h-[90%] overflow-y-auto top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center rounded-xl p-6">
-      <X onClick={() => setPopup(false)} className="absolute top-4 right-4 text-red-500 w-7 h-7 cursor-pointer" />
+    <div className="fixed z-50 bg-white/70 backdrop-blur-xl shadow-2xl border border-blue-200 w-[98vw] max-w-3xl h-[95vh] overflow-y-auto top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center rounded-2xl p-4 sm:p-8 transition-all">
+      <X onClick={() => setPopup(false)} className="absolute top-4 max-md:top-8 right-4 text-red-500 w-9 h-9 max-md:w-11 max-md:h-11 cursor-pointer hover:bg-red-100 rounded-full p-1 transition" />
 
-      <form onSubmit={handleSubmit} className="w-full max-w-5xl flex flex-col items-center gap-6">
-        <h2 className="text-2xl font-semibold text-center text-gray-800">{isEditable ? "Edit Job Application" : "Job Application Details"}</h2>
+      <form onSubmit={handleSubmit} className="w-full flex flex-col items-center gap-6">
+        <h2 className="text-2xl font-bold text-center text-blue-800 tracking-tight mb-2 font-sora drop-shadow">{isEditable ? "Edit Job Application" : "Job Application Details"}</h2>
 
-        <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 w-full gap-4">
+        <section className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
           {array.map(result => (
-            <div key={result.id} className="flex flex-col gap-1 bg-gray-100 rounded-md p-4 shadow-sm">
-              <label className="text-sm font-medium text-gray-700">{result.label}</label>
+            <div key={result.id} className="flex flex-col gap-2 bg-white/80 rounded-xl p-4 shadow border border-blue-100">
+              <label className="text-sm font-semibold text-blue-700 font-manrope mb-1">{result.label}</label>
               {result.name === "points" && <p className="text-xs text-gray-500 mb-1">Selected: {value}</p>}
               {result.name === "level" && isEditable ? <Select value={result.value as string} name={result.name}/> : (
                 <input
@@ -93,7 +93,7 @@ const Job_Details = ({ popup, setPopup, setApps }: Props) => {
                   max={10}
                   defaultValue={result.value as unknown as string}
                   onChange={(e) => result.name === "points" && setValue(Number(e.target.value))}
-                  className={`outline-0 border border-gray-300 rounded-md p-2 text-sm ${isEditable ? "bg-white" : "bg-gray-200"} transition`}
+                  className={`outline-0 border border-blue-200 rounded-lg p-3 text-base font-sora transition w-full ${isEditable ? "bg-white" : "bg-gray-100"}`}
                   name={result.name}
                   readOnly={!isEditable}
                   type={isEditable ? result.type : "text"}
@@ -105,14 +105,14 @@ const Job_Details = ({ popup, setPopup, setApps }: Props) => {
 
         {isEditable && (
           <button
-            className="w-full max-w-sm bg-yellow-600 hover:bg-yellow-700 text-white text-lg font-medium p-3 rounded-md transition"
+            className="w-full max-w-xs bg-yellow-500 hover:bg-yellow-600 text-white text-lg font-semibold p-3 rounded-xl shadow transition"
             type="submit"
           >
             {isPending ? "Saving..." : "Save Changes"}
           </button>
         )}
 
-        {error.length > 0 && <p className="text-red-600 text-sm">{error}</p>}
+        {error.length > 0 && <p className="text-red-600 text-sm font-semibold mt-2">{error}</p>}
       </form>
 
       <div className="w-full flex flex-col sm:flex-row gap-4 items-center justify-center mt-6">
@@ -121,7 +121,7 @@ const Job_Details = ({ popup, setPopup, setApps }: Props) => {
             setIsEditable(!isEditable);
             error && setError("");
           }}
-          className="bg-blue-600 hover:bg-blue-700 w-full max-w-sm text-white text-lg font-medium p-3 rounded-md transition"
+          className="bg-blue-600 hover:bg-blue-700 w-full max-w-xs text-white text-lg font-semibold p-3 rounded-xl shadow transition"
         >
           {isEditable ? "Cancel Edit" : "Edit"}
         </button>

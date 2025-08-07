@@ -58,26 +58,37 @@ const AddJob = ({setShowAddJob,setApps}:{setShowAddJob:React.Dispatch<React.SetS
     }
 
   return (
-    <div className="fixed bg-black/30 border w-full h-full left-0 top-0 flex items-center justify-center z-10">
-        <form onSubmit={handleSubmit} className="bg-white relative w-[95%] border max-w-[750px] rounded-lg flex flex-col items-center gap-5 overflow-y-auto p-5">
-            <button type="button" className="absolute top-2 right-2 cursor-pointer text-red-500" onClick={() => setShowAddJob(false)}><X /></button>
-            <h1 className="text-3xl text-center font-manrope font-bold">Add Job</h1>
+    <div className="fixed bg-white/70 backdrop-blur-xl border border-blue-200 w-[98vw] max-w-3xl h-[95vh] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center justify-center z-50 rounded-2xl p-4 sm:p-8 shadow-2xl transition-all">
+      <form onSubmit={handleSubmit} className="relative w-full max-md:py-10 flex flex-col items-center gap-6 overflow-y-auto max-h-[90vh]">
+        <button type="button" className="absolute top-4 right-4 text-red-500 w-9 h-9 max-md:w-12 max-md:h-12 cursor-pointer hover:bg-red-100 rounded-full p-1 transition" onClick={() => setShowAddJob(false)}><X className="max-md:w-full max-md:h-full"/></button>
+        <h1 className="text-3xl text-center font-manrope font-bold text-blue-800 drop-shadow">Add Job</h1>
 
-            <div className="grid grid-cols-2 max-sm:grid-cols-1 gap-5 w-full">
-                {array.map(result => (
-                    <div className="flex flex-col gap-1" key={result.id}>
-                        <label className="text-sm pl-2 flex items-center gap-3 font-manrope font-semibold">{result.label} {result.name === "points" && <span className="font-bold">{points}/10</span>}</label>
-                        {result.name !== "level" && result.name !== "description" ? <input className="border outline-0 pl-2 py-1 text-sm font-sora text-gray-600" type={result.name === "date" ? "date" : result.name === "points" ? "range" : result.name === "job_link" ? "url" : "text"} onChange={(e)=>result.name === "points" && handlePointchange(e)} min={1} max={10} defaultValue={result.name === "points" ? points : ""} step={1} name={result.name} /> : result.name === "level" ? (
-                            <Select name={result.name}/>
-                        ) : result.name === "description" && (
-                            <textarea maxLength={300} className="border outline-0 px-1 py-1 text-sm h-[100px] resize-none" placeholder="Max 300 characters" name={result.name} />   
-                        )}
-                        {errors.length > 0 && errors.find(error => error.field === result.name) && <Message message={`${errors.find(error => error.field === result.name)?.message}`}/>}
-                    </div>
-                ))}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+          {array.map(result => (
+            <div className="flex flex-col gap-2 bg-white/80 rounded-xl p-4 shadow border border-blue-100" key={result.id}>
+              <label className="text-sm font-semibold text-blue-700 font-manrope mb-1 flex items-center gap-3">{result.label} {result.name === "points" && <span className="font-bold">{points}/10</span>}</label>
+              {result.name !== "level" && result.name !== "description" ? (
+                <input
+                  className="outline-0 border border-blue-200 rounded-lg p-3 text-base font-sora transition w-full bg-white"
+                  type={result.name === "date" ? "date" : result.name === "points" ? "range" : result.name === "job_link" ? "url" : "text"}
+                  onChange={(e) => result.name === "points" && handlePointchange(e)}
+                  min={1}
+                  max={10}
+                  defaultValue={result.name === "points" ? points : ""}
+                  step={1}
+                  name={result.name}
+                />
+              ) : result.name === "level" ? (
+                <Select name={result.name} />
+              ) : result.name === "description" && (
+                <textarea maxLength={300} className="outline-0 border border-blue-200 rounded-lg px-3 py-2 text-base h-[100px] resize-none bg-white font-sora" placeholder="Max 300 characters" name={result.name} />
+              )}
+              {errors.length > 0 && errors.find(error => error.field === result.name) && <Message message={`${errors.find(error => error.field === result.name)?.message}`}/>} 
             </div>
-            <button className="bg-blue-500 text-white  py-3 w-full max-w-[250px] rounded-lg mt-10 cursor-pointer font-manrope font-bold">{isPending ? "Waiting..." : "Add Job"}</button>
-        </form>
+          ))}
+        </div>
+        <button className="bg-blue-600 hover:bg-blue-700 text-white py-3 w-full max-w-xs rounded-xl mt-8 cursor-pointer font-manrope font-bold shadow transition text-lg">{isPending ? "Waiting..." : "Add Job"}</button>
+      </form>
     </div>
   )
 }
