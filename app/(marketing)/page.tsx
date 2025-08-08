@@ -14,6 +14,7 @@ export default function Home() {
   const [apps,setApps] = useState<Application[]>([]);
   const [query,setQuery] = useState<string>('');
   const [showButton,setShowButton] = useState(true);
+  const [showFilter,setShowFilter] = useState(false);
   
   const [isPending,startTransition] = useTransition();
   const [isPending2,startTransition2] = useTransition();
@@ -63,8 +64,8 @@ export default function Home() {
   return (
     <div className="pt-25">
       {showAddJob && <AddJob setShowAddJob={setShowAddJob} setApps={setApps}/>}
-      <Filter values={values} setValues={setValues} fetchData={fetchData}/>
-      <Jobs apps={apps} setShowAddJob = {setShowAddJob} isPending2={isPending2} setApps={setApps} showButton={showButton} fetchMoreData={fetchMoreData} isPending={isPending}/>
+      {showFilter && <Filter values={values} setValues={setValues} fetchData={fetchData}/>}
+      <Jobs apps={apps} setShowAddJob = {setShowAddJob} isPending2={isPending2} setApps={setApps} showButton={showButton} fetchMoreData={fetchMoreData} isPending={isPending} showFilter={showFilter} setShowFilter={setShowFilter}/>
     </div>
   );
 }
