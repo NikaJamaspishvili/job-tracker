@@ -3,7 +3,6 @@ import register from "@/public/about/image(1).png";
 import home from "@/public/about/image(2).png";
 import profile from "@/public/about/image(3).png";
 import addjob from "@/public/about/image(4).png";
-import background_image from "@/public/about/background_image.jpg";
 
 export default function AboutPage() {
   const list_array_1 = [
@@ -24,7 +23,7 @@ export default function AboutPage() {
     { title: "Date", body: "The exact date you submitted your application." },
     { title: "Description", body: "Any notes or details you'd like to add about this application." }
   ];
-  
+
   const array = [
     {
       id: 1,
@@ -58,8 +57,7 @@ export default function AboutPage() {
     <div className="bg-white pt-30 pb-12 min-h-screen flex flex-col gap-15">
       {/* Hero Section */}
       <section className="flex flex-col items-center justify-center text-center mb-16 px-5 py-15 rounded-2xl relative">
-        <Image src={background_image} alt="background image" className="absolute rounded-lg w-full h-full object-cover"/>
-        <h1 className="text-3xl z-1 md:text-4xl font-bold text-white font-manrope max-w-[500px] tracking-wide leading-snug">Track your job applications as simple as possible.</h1>
+        <h1 className="text-3xl z-1 md:text-5xl font-bold text-black font-manrope max-w-[500px] tracking-wide leading-snug">Track your job applications as simple as possible.</h1>
       </section>
       <section className="flex flex-col max-w-[700px] items-center mx-auto gap-4 justify-center text-center mb-16 px-4">
         <h1 className="text-3xl font-bold font-manrope max-w-[600px]">What does it offer?</h1>
