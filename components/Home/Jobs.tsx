@@ -5,16 +5,17 @@ interface Props{
   showButton:boolean,
   isPending:boolean,
   isPending2:boolean,
+  setShowAddJob:React.Dispatch<React.SetStateAction<boolean>>
 }
 import { Application } from "@/schema/applications"
 import Apps_listing from "../Apps_listing"
 import { CircleFadingPlus } from "lucide-react"
 
-const Jobs = ({apps,setApps,showButton,fetchMoreData,isPending,isPending2}:Props) => {
+const Jobs = ({apps,setApps,showButton,fetchMoreData,isPending,isPending2,setShowAddJob}:Props) => {
 
   return (
     <div className="py-10">
-      <button className="flex items-center cursor-pointer gap-2 bg-orange-600/80 hover:bg-orange-700/90 shadow-xl rounded-full text-white text-lg font-sora font-semibold px-7 py-3 transition-all active:scale-95 backdrop-blur-md ml-auto">Add Application <CircleFadingPlus /></button>
+      <button className="flex items-center cursor-pointer gap-2 bg-orange-600/80 hover:bg-orange-700/90 shadow-xl rounded-full text-white text-lg font-sora font-semibold px-7 py-3 transition-all active:scale-95 backdrop-blur-md ml-auto" onClick={()=>setShowAddJob(true)}>Add Application <CircleFadingPlus /></button>
       <section className="flex flex-col">
         <Apps_listing isPending={isPending2} apps={apps} setApps={setApps}/>
         {showButton ? (apps.length > 0 && apps.length % 5 === 0 && <button disabled={isPending} onClick={fetchMoreData} className="bg-blue-500 w-4/5 max-w-[200px] rounded-xl text-white font-sora mt-3 p-2 cursor-pointer mx-auto">{isPending ? "Loading..." : "Load More"}</button>) : <p className="text-center text-red-500 text-xl font-sora mt-5">You have reached the end</p>}

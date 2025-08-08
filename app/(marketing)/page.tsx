@@ -64,7 +64,7 @@ export default function Home() {
     <div className="pt-25">
       {showAddJob && <AddJob setShowAddJob={setShowAddJob} setApps={setApps}/>}
       <Filter values={values} setValues={setValues} fetchData={fetchData}/>
-      <Jobs apps={apps} isPending2={isPending2} setApps={setApps} showButton={showButton} fetchMoreData={fetchMoreData} isPending={isPending}/>
+      <Jobs apps={apps} setShowAddJob = {setShowAddJob} isPending2={isPending2} setApps={setApps} showButton={showButton} fetchMoreData={fetchMoreData} isPending={isPending}/>
     </div>
   );
 }
