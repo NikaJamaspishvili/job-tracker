@@ -81,7 +81,7 @@ const AddJob = ({setShowAddJob,setApps}:{setShowAddJob:React.Dispatch<React.SetS
               ) : result.name === "level" ? (
                 <Select name={result.name} />
               ) : result.name === "description" && (
-                <textarea maxLength={300} className="outline-0 border border-blue-200 rounded-lg px-3 py-2 text-base h-[100px] resize-none bg-white font-sora" placeholder="Max 300 characters" name={result.name} />
+                <textarea maxLength={2000} className="outline-0 border border-blue-200 rounded-lg px-3 py-2 text-base h-[100px] resize-none bg-white font-sora" placeholder="Max 2000 characters" name={result.name} />
               )}
               {errors.length > 0 && errors.find(error => error.field === result.name) && <Message message={`${errors.find(error => error.field === result.name)?.message}`}/>} 
             </div>

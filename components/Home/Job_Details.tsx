@@ -18,6 +18,7 @@ const Job_Details = ({ popup, setPopup, setApps, editMode = false }: Props) => {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState('');
   const [value, setValue] = useState(0);
+  const [textArea,setTextArea] = useState("");
 
   useEffect(() => {
     async function fetchData() {
@@ -26,6 +27,7 @@ const Job_Details = ({ popup, setPopup, setApps, editMode = false }: Props) => {
         setObject(result.data[0]);
         setValue(result.data[0].points);
         setIsEditable(editMode);
+        setTextArea(result.data[0].description);
       }
     }
     fetchData();
@@ -85,24 +87,56 @@ const Job_Details = ({ popup, setPopup, setApps, editMode = false }: Props) => {
         <h2 className="text-2xl font-bold text-center text-blue-800 tracking-tight mb-2 font-sora drop-shadow">{isEditable ? "Edit Job Application" : "Job Application Details"}</h2>
 
         <section className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
-          {array.map(result => (
-            <div key={result.id} className="flex flex-col gap-2 bg-white/80 rounded-xl p-4 shadow border border-blue-100">
-              <label className="text-sm font-semibold text-blue-700 font-manrope mb-1">{result.label}</label>
-              {result.name === "points" && <p className="text-xs text-gray-500 mb-1">Selected: {value}</p>}
-              {result.name === "level" && isEditable ? <Select value={result.value as string} name={result.name}/> : (
-                <input
-                  min={1}
-                  max={10}
-                  defaultValue={result.value as unknown as string}
-                  onChange={(e) => result.name === "points" && setValue(Number(e.target.value))}
-                  className={`outline-0 border border-blue-200 rounded-lg p-3 text-base font-sora transition w-full ${isEditable ? "bg-white" : "bg-gray-100"}`}
-                  name={result.name}
-                  readOnly={!isEditable}
-                  type={isEditable ? result.type : "text"}
-                />
-              )}
-            </div>
-          ))}
+          {array.map(result => {
+            // Special handling for description field
+            if (result.name === "description") {
+              return (
+                <div key={result.id} className="sm:col-span-2 flex flex-col gap-2 bg-white/80 rounded-xl p-4 shadow border border-blue-100">
+                  <label className="text-sm font-semibold text-blue-700 font-manrope mb-1">{result.label}</label>
+                  {isEditable ? (
+                    <textarea
+                      value={textArea}
+                      onChange={(e)=>setTextArea(e.target.value)}
+                      className="outline-0 border border-blue-200 rounded-lg p-3 text-base font-sora transition w-full bg-white resize-none"
+                      name={result.name}
+                      rows={4}
+                      placeholder="Enter job description..."
+                      maxLength={2000}
+                    />
+                  ) : (
+                    <div className="border border-blue-200 rounded-lg p-3 text-base font-sora bg-gray-100 min-h-[100px] max-h-[200px] overflow-y-auto">
+                      {(result.value as string) || "No description provided"}
+                    </div>
+                  )}
+                  {isEditable && (
+                    <p className="text-xs text-gray-500 text-right">
+                      {(textArea|| "").length}/2000 characters
+                    </p>
+                  )}
+                </div>
+              );
+            }
+            
+            // Regular fields
+            return (
+              <div key={result.id} className="flex flex-col gap-2 bg-white/80 rounded-xl p-4 shadow border border-blue-100">
+                <label className="text-sm font-semibold text-blue-700 font-manrope mb-1">{result.label}</label>
+                {result.name === "points" && <p className="text-xs text-gray-500 mb-1">Selected: {value}</p>}
+                {result.name === "level" && isEditable ? <Select value={result.value as string} name={result.name}/> : (
+                  <input
+                    min={1}
+                    max={10}
+                    defaultValue={result.value as unknown as string}
+                    onChange={(e) => result.name === "points" && setValue(Number(e.target.value))}
+                    className={`outline-0 border border-blue-200 rounded-lg p-3 text-base font-sora transition w-full ${isEditable ? "bg-white" : "bg-gray-100"}`}
+                    name={result.name}
+                    readOnly={!isEditable}
+                    type={isEditable ? result.type : "text"}
+                  />
+                )}
+              </div>
+            );
+          })}
         </section>
 
         {isEditable && (

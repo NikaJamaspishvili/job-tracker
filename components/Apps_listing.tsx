@@ -136,13 +136,6 @@ const Apps_listing = ({apps,setApps,isPending}:{apps:Application[],isPending:boo
                         >
                           <Edit className="w-4 h-4" />
                         </button>
-                        <button
-                          onClick={() => {/* TODO: Implement delete */}}
-                          className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200 cursor-pointer"
-                          title="Delete"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
                       </div>
                     </td>
                   </tr>
