@@ -9,11 +9,12 @@ interface Props {
   popup: boolean | number | string | File;
   setPopup: React.Dispatch<React.SetStateAction<boolean | number | string | File>>;
   setApps: React.Dispatch<React.SetStateAction<Application[]>>;
+  editMode?: boolean;
 }
 
-const Job_Details = ({ popup, setPopup, setApps }: Props) => {
+const Job_Details = ({ popup, setPopup, setApps, editMode = false }: Props) => {
   const [object, setObject] = useState<Application | null>(null);
-  const [isEditable, setIsEditable] = useState(false);
+  const [isEditable, setIsEditable] = useState(editMode);
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState('');
   const [value, setValue] = useState(0);
@@ -24,10 +25,11 @@ const Job_Details = ({ popup, setPopup, setApps }: Props) => {
       if (result.success) {
         setObject(result.data[0]);
         setValue(result.data[0].points);
+        setIsEditable(editMode);
       }
     }
     fetchData();
-  }, []);
+  }, [editMode]);
 
   if (object === null) return <Loading />;
 

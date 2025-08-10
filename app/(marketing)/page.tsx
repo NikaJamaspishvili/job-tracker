@@ -41,21 +41,6 @@ export default function Home() {
     })
   }
 
-  async function fetchMoreData(){
-    //this function is used for fetching the data after scroll load in order to keep the same filtering active.
-    let alteredQuery = query;
-    console.log(apps);
-    alteredQuery+=` and id < ${apps[apps.length-1].id} order by id desc limit 5`;
-    startTransition(async ()=>{
-      const data = await getApplications(alteredQuery);
-      if(data.success){
-        if(data.data.length === 0) return setShowButton(false);
-        const newApps = [...apps,...data.data];
-        return setApps(newApps);
-      }
-    })
-  }
-
   useEffect(()=>{
     fetchData();
   },[])
@@ -65,7 +50,7 @@ export default function Home() {
     <div className="pt-25">
       {showAddJob && <AddJob setShowAddJob={setShowAddJob} setApps={setApps}/>}
       {showFilter && <Filter values={values} setValues={setValues} fetchData={fetchData}/>}
-      <Jobs apps={apps} setShowAddJob = {setShowAddJob} isPending2={isPending2} setApps={setApps} showButton={showButton} fetchMoreData={fetchMoreData} isPending={isPending} showFilter={showFilter} setShowFilter={setShowFilter}/>
+      <Jobs apps={apps} setShowAddJob = {setShowAddJob} isPending2={isPending2} setApps={setApps} showButton={showButton} isPending={isPending} showFilter={showFilter} setShowFilter={setShowFilter}/>
     </div>
   );
 }
