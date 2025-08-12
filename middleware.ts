@@ -11,20 +11,15 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
   
-  if(url === "/"){
+  if(url === "/" || url === "/profile"){
     if(result) return NextResponse.next();
     
     return NextResponse.redirect(new URL('/register', request.nextUrl))
-  }
-
-  if(url === "/profile"){
-    if(result) return NextResponse.next();
-    return NextResponse.redirect(new URL("/register",request.nextUrl))
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-    matcher: ['/register','/','/profile'],
+    matcher: ['/register','/','/profile','/sendemail'],
 }

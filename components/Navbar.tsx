@@ -34,6 +34,7 @@ const Navbar = () => {
         <section className="hidden sm:flex gap-8 [&>a]:cursor-pointer [&>a]:font-medium text-white/90 [&>a]:relative [&>a]:after:content-[''] [&>a]:after:block [&>a]:after:h-[2px] [&>a]:after:bg-white [&>a]:after:w-0 [&>a]:after:transition-all [&>a]:after:duration-300 [&>a]:hover:after:w-full [&>a]:after:absolute [&>a]:after:left-0 [&>a]:after:bottom-[-4px] [&>a]:hover:text-white [&>a]:transition-colors [&>a]:duration-300">
           <a onClick={() => router.push("/")} className="hover:scale-105 transition-transform duration-200">Home</a>
           <a onClick={()=> alert("Comming soon...")} className="hover:scale-105 transition-transform duration-200">Events</a>
+          <a onClick={()=> router.push("/emails")} className="hover:scale-105 transition-transform duration-200">Emails</a>
           <a onClick={() => router.push("/about")} className="hover:scale-105 transition-transform duration-200">How it works?</a>
           <a onClick={() => { window.location.pathname !== "/" && router.push("/"); setShowAddJob(true); }} className="hover:scale-105 transition-transform duration-200">Add Application</a>
           <a onClick={() => router.push("/profile")} className="hover:scale-105 transition-transform duration-200">Profile</a>

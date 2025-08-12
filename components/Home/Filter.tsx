@@ -9,9 +9,10 @@ interface Props{
     values:{title:string,value:string[]}[],
     setValues:React.Dispatch<React.SetStateAction<{title:string,value:string[]}[]>>,
     fetchData:()=>void,
+    setQuery:React.Dispatch<React.SetStateAction<string>>,
 }
 
-const Filter = ({values,setValues,fetchData}:Props) => {
+const Filter = ({values,setValues,fetchData,setQuery}:Props) => {
     const [isOpen,setIsOpen] = useState('');
     const [input,setInput] = useState('');
     const [error,setError] = useState('');
@@ -59,6 +60,7 @@ const Filter = ({values,setValues,fetchData}:Props) => {
     }
 
     const handleClearButton = () => {
+        setQuery('');
         const val = values.find(item => item.value.length > 0);
         if(!val) return;
         const newArray = [...values];

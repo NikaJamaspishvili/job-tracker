@@ -2,11 +2,11 @@
 
 import Filter from "@/components/Home/Filter";
 import Jobs from "@/components/Home/Jobs";
-import Loading from "@/components/Loading";
 import { useEffect, useState,useTransition } from "react";
 import { useMyContext } from "@/context/Mycontext";
 import { getApplications } from "@/server/applications/main";
 import AddJob from "@/components/Home/AddJob";
+import SendEmail from "@/components/sendemail/SendEmail";
 import { Application } from "@/schema/applications";
 
 export default function Home() {
@@ -15,6 +15,7 @@ export default function Home() {
   const [query,setQuery] = useState<string>('');
   const [showButton,setShowButton] = useState(true);
   const [showFilter,setShowFilter] = useState(false);
+  const [hasMoreData,setHasMoreData] = useState(true);
   
   const [isPending,startTransition] = useTransition();
   const [isPending2,startTransition2] = useTransition();
@@ -28,13 +29,17 @@ export default function Home() {
         newArray.forEach((item) => {
                 query += ` and ${item.title} in (${item.value.map((key:string) => `'${key}'`).join(',')})`;
         })
+        setQuery(query);
     }
-    setQuery(query);
     query+=" order by id desc limit 5";
     console.log(query);
     startTransition2(async ()=>{
       const data = await getApplications(query);
-    
+      if(data.data.length < 5){
+        setHasMoreData(false);
+      }else{
+        setHasMoreData(true);
+      }
       if(data.success){
         return setApps(data.data);
       }
@@ -46,11 +51,13 @@ export default function Home() {
   },[])
 
   const {showAddJob,setShowAddJob} = useMyContext();
+  const [showEmail,setShowEmail] = useState(false);
   return (
     <div className="pt-25">
       {showAddJob && <AddJob setShowAddJob={setShowAddJob} setApps={setApps}/>}
-      {showFilter && <Filter values={values} setValues={setValues} fetchData={fetchData}/>}
-      <Jobs apps={apps} setShowAddJob = {setShowAddJob} isPending2={isPending2} setApps={setApps} showButton={showButton} isPending={isPending} showFilter={showFilter} setShowFilter={setShowFilter}/>
+      {showEmail && <SendEmail setShowEmail={setShowEmail} setApps={setApps}/>}
+      {showFilter && <Filter setQuery={setQuery} values={values} setValues={setValues} fetchData={fetchData}/>}
+      <Jobs query={query} hasMoreData={hasMoreData} setHasMoreData={setHasMoreData} setShowEmail={setShowEmail} apps={apps} setShowAddJob = {setShowAddJob} isPending2={isPending2} setApps={setApps} showButton={showButton} isPending={isPending} showFilter={showFilter} setShowFilter={setShowFilter}/>
     </div>
   );
 }

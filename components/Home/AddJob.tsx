@@ -5,26 +5,36 @@ import { Application, ApplicationSchema } from "@/schema/applications";
 import Message from "../errors/Message";
 import { X } from "lucide-react";
 import Select from "../Select";
+import { EmailInfo } from "@/schema/email";
 
-const AddJob = ({setShowAddJob,setApps}:{setShowAddJob:React.Dispatch<React.SetStateAction<boolean>>,setApps:React.Dispatch<React.SetStateAction<Application[]>>}) => {
+interface Props{
+  setShowAddJob:React.Dispatch<React.SetStateAction<boolean>>,
+  setApps:React.Dispatch<React.SetStateAction<Application[]>>,
+  emailInfo?:EmailInfo | null,
+  setShowEmail?:React.Dispatch<React.SetStateAction<boolean>>,
+}
+
+const AddJob = ({setShowAddJob,setApps,emailInfo,setShowEmail}:Props) => {
     const [isPending,startTransition] = useTransition();
     const [points,setPoints] = useState(1);
     const [errors,setErrors] = useState<{field:PropertyKey,message:string}[]>([]);
 
+    const today = new Date();
+    const formattedDate = today.toISOString().split("T")[0];
+
     const array = [
-        {id:1,label:"Job Title",name:"job_title"},
-        {id:2,label:"Company",name:"company"},
-        {id:3,label:"Platform",name:"platform"},
-        {id:4,label:"Link to job",name:"job_link"},
-        {id:5,label:"Points",name:"points"},
-        {id:6,label:"Level",name:"level"},
-        {id:7,label:"Date",name:"date"},
-        {id:8,label:"Description",name:"description"},
+        {id:1,label:"Job Title",name:"job_title",defaultValue:emailInfo?.subject || ""},
+        {id:2,label:"Company",name:"company",defaultValue:emailInfo?.to || ""},
+        {id:3,label:"Platform",name:"platform",defaultValue:""},
+        {id:4,label:"Link to job",name:"job_link",defaultValue:""},
+        {id:5,label:"Points",name:"points",defaultValue:1},
+        {id:6,label:"Level",name:"level",defaultValue:"applied"},
+        {id:7,label:"Date",name:"date",defaultValue:formattedDate},
+        {id:8,label:"Description",name:"description",defaultValue:emailInfo?.body || ""},
     ]
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-
         const formData = new FormData(e.currentTarget as HTMLFormElement);
         const data:Application = Object.fromEntries(formData.entries());
         console.log(data);
@@ -47,6 +57,7 @@ const AddJob = ({setShowAddJob,setApps}:{setShowAddJob:React.Dispatch<React.SetS
                     return array;
                 })
                 setShowAddJob(false);
+                if(setShowEmail) setShowEmail(false);
             }
         })
     }
@@ -74,14 +85,14 @@ const AddJob = ({setShowAddJob,setApps}:{setShowAddJob:React.Dispatch<React.SetS
                   onChange={(e) => result.name === "points" && handlePointchange(e)}
                   min={1}
                   max={10}
-                  defaultValue={result.name === "points" ? points : ""}
+                  defaultValue={result.name === "points" ? points : result.defaultValue}
                   step={1}
                   name={result.name}
                 />
               ) : result.name === "level" ? (
                 <Select name={result.name} />
               ) : result.name === "description" && (
-                <textarea maxLength={2000} className="outline-0 border border-blue-200 rounded-lg px-3 py-2 text-base h-[100px] resize-none bg-white font-sora" placeholder="Max 2000 characters" name={result.name} />
+                <textarea maxLength={2000} defaultValue={result.defaultValue} className="outline-0 border border-blue-200 rounded-lg px-3 py-2 text-base h-[100px] resize-none bg-white font-sora" placeholder="Max 2000 characters" name={result.name} />
               )}
               {errors.length > 0 && errors.find(error => error.field === result.name) && <Message message={`${errors.find(error => error.field === result.name)?.message}`}/>} 
             </div>

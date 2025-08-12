@@ -1,7 +1,6 @@
 import { X } from "lucide-react"
 import { useEffect, useState, useTransition } from "react"
 import { getApplication } from "@/server/goals/main";
-import Loading from "@/components/Loading";
 import Apps_listing from "@/components/Apps_listing";
 import { Application } from "@/schema/applications";
 import { Calendar } from "lucide-react";

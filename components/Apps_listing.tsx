@@ -1,11 +1,20 @@
 import { Application } from "@/schema/applications";
 import Job_Details from "./Home/Job_Details"
-import { useState, useTransition } from "react"
+import { useEffect, useState, useTransition } from "react"
 import { PackageOpenIcon, Eye, Edit, Trash2 } from "lucide-react";
 import Loading from "./Loading";
 import { getApplications } from "@/server/applications/main";
 
-const Apps_listing = ({apps,setApps,isPending}:{apps:Application[],isPending:boolean,setApps:React.Dispatch<React.SetStateAction<Application[]>>}) => {
+interface Props{
+  apps:Application[]
+  setApps:React.Dispatch<React.SetStateAction<Application[]>>
+  isPending:boolean,
+  query?:string,
+  hasMoreData?:boolean,
+  setHasMoreData?:React.Dispatch<React.SetStateAction<boolean>>,
+}
+
+const Apps_listing = ({apps,setApps,isPending,query,hasMoreData,setHasMoreData}:Props) => {
   const colors_for_level: {[k: string]:string} = {
     applied:"bg-yellow-500",
     interview:"bg-purple-300",
@@ -17,7 +26,6 @@ const Apps_listing = ({apps,setApps,isPending}:{apps:Application[],isPending:boo
   const [editMode, setEditMode] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoadingMore, startLoadingMore] = useTransition();
-  const [hasMoreData, setHasMoreData] = useState(true);
   const itemsPerPage = 5;
 
   const handleEdit = (appId: number) => {
@@ -36,6 +44,12 @@ const Apps_listing = ({apps,setApps,isPending}:{apps:Application[],isPending:boo
   const endIndex = startIndex + itemsPerPage;
   const currentApps = apps.slice(startIndex, endIndex);
 
+  useEffect(()=>{
+    if(apps.length <= 5){
+        setCurrentPage(1);      
+    }
+  },[apps]);
+
   // Handle page navigation with data fetching
   const handlePrevious = () => {
     if (currentPage > 1) {
@@ -50,19 +64,19 @@ const Apps_listing = ({apps,setApps,isPending}:{apps:Application[],isPending:boo
       startLoadingMore(async () => {
         try {
           // Use the same query logic as your existing fetchMoreData
-          const query = `select id,job_title,company,platform,points,level,DATE_FORMAT(date, '%Y-%m-%d') as date from applications where userId=? and id < ${lastApp.id} order by id desc limit ${itemsPerPage}`;
-          const data = await getApplications(query);
-          
+          const newQuery =query && query.length > 0 ? query+` and id < ${lastApp.id} order by id desc limit ${itemsPerPage}` : `select id,job_title,company,platform,points,level,DATE_FORMAT(date, '%Y-%m-%d') as date from applications where userId=? and id < ${lastApp.id} order by id desc limit ${itemsPerPage}`;
+          console.log("new query is: ",newQuery);
+          const data = await getApplications(newQuery);
+          console.log(data);
+          if(data.data.length < 5 && setHasMoreData !== undefined) setHasMoreData(false);
           if (data.success && data.data.length > 0) {
             setApps(prev => [...prev, ...data.data]);
             setCurrentPage(currentPage + 1);
-          } else {
-            // No more data available
-            setHasMoreData(false);
           }
+
         } catch (error) {
           console.error("Error fetching more data:", error);
-          setHasMoreData(false);
+          if(setHasMoreData) setHasMoreData(false);
         }
       });
     } else if (currentPage < totalPages) {
