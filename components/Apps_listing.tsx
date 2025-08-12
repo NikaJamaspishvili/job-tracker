@@ -1,7 +1,7 @@
 import { Application } from "@/schema/applications";
 import Job_Details from "./Home/Job_Details"
 import { useEffect, useState, useTransition } from "react"
-import { PackageOpenIcon, Eye, Edit, Trash2 } from "lucide-react";
+import { PackageOpenIcon, Eye, Edit } from "lucide-react";
 import Loading from "./Loading";
 import { getApplications } from "@/server/applications/main";
 

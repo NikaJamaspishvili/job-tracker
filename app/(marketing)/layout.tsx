@@ -5,6 +5,7 @@ import "../globals.css";
 import { useState } from "react";
 import { MyContext } from "@/context/Mycontext";
 import {Manrope,Sora} from "next/font/google";
+import Events from "@/components/Home/Events";
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -24,12 +25,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const [showAddJob,setShowAddJob] = useState(false);
+  const [showEvents,setShowEvents] = useState(false);
   return (
     <html lang="en">
       <body className="bg-white">
         <div className={`w-[95%] ${manrope.variable} ${sora.variable} max-w-[1200px] min-h-screen flex mx-auto flex-col`}>
         <MyContext.Provider value={{showAddJob,setShowAddJob}}>
-        <Navbar />
+        {showEvents && <Events setShowEvents={setShowEvents}/>}
+        <Navbar setShowEvents={setShowEvents} />
         {children}
         </MyContext.Provider>
         </div>
