@@ -11,7 +11,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
   
-  if(url === "/" || url === "/profile"){
+  if(url === "/" || url === "/profile" || url === "/emails"){
     if(result) return NextResponse.next();
     
     return NextResponse.redirect(new URL('/register', request.nextUrl))
@@ -21,5 +21,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ['/register','/','/profile','/sendemail'],
+    matcher: ['/register','/','/profile','/emails'],
 }
