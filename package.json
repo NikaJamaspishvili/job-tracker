@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "cohere-ai": "^7.18.0",
     "firebase": "^12.0.0",
     "googleapis": "^155.0.1",
     "jose": "^6.0.12",
