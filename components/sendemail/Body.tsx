@@ -85,11 +85,6 @@ const Body = ({
       />
 
       <div className="flex mt-2 justify-between items-center">
-        {/* Log HTML for debugging */}
-        <button type="button" onClick={logPlainText}>
-          Log HTML
-        </button>
-
         <button
           disabled={isPending2 || isPending3 || summaryCount >= 3}
           type="button"
