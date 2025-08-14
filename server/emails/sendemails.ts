@@ -4,7 +4,7 @@ import { transporter } from "@/config/nodemailer";
 import { verifyJwt } from "../jwt/verify";
 import { callDatabase } from "@/config/db";
 
-export const sendEmail = async (subject:string | FormDataEntryValue,To:string | FormDataEntryValue,text:string | FormDataEntryValue,file:File | null ,refreshToken:string | null,userEmail:string) => {
+export const sendEmail = async (subject:string | FormDataEntryValue,To:string | FormDataEntryValue,text:string | FormDataEntryValue,file:File | null ,refreshToken:string | null,userEmail:string,html:string) => {
    console.log("refresh token is: ",refreshToken);
    console.log("these are the: ",subject,To,text,userEmail);
 
@@ -27,7 +27,7 @@ export const sendEmail = async (subject:string | FormDataEntryValue,To:string | 
             to: To.toString(),
             replyTo: userEmail,
             subject: subject.toString(),
-            text: text.toString(),
+            html: html.toString(),
             attachments: attachmentData ? [attachmentData] : []
           };
           try{
