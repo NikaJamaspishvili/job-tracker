@@ -81,7 +81,8 @@ const Body = ({
       {/* Quill editor */}
       <div
         ref={editorRef}
-        className="bg-white h-[150px] border border-gray-200"
+        style={{ height: "150px"}}
+        className="bg-white border border-gray-200"
       />
 
       <div className="flex mt-2 justify-between items-center">
