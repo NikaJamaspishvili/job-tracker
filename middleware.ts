@@ -2,9 +2,8 @@ import { NextRequest,NextResponse } from 'next/server'
 import { verifyJwt } from './server/jwt/verify';
 
 export async function middleware(request: NextRequest) {
-  const url = request.nextUrl.pathname;
   const result = await verifyJwt();
-
+  const url = request.nextUrl.pathname;
   if(url === "/register"){
 
     if(result) return NextResponse.redirect(new URL('/', request.nextUrl))

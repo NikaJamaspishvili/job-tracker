@@ -6,7 +6,7 @@ export const setCookie = async (token: string) => {
         (await cookies()).set('token',token,{
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
+            sameSite: 'lax',
         });
     }catch(err){
         console.log(err);
